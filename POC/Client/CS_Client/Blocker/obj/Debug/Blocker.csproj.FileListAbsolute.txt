@@ -1,0 +1,9 @@
+E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Blocker.Properties.Resources.resources
+E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Blocker.csproj.GenerateResource.cache
+E:\cyber\project2\POC\Client\CS_Client\Blocker\bin\Debug\Blocker.exe.config
+E:\cyber\project2\POC\Client\CS_Client\Blocker\bin\Debug\Blocker.exe
+E:\cyber\project2\POC\Client\CS_Client\Blocker\bin\Debug\Blocker.pdb
+E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Blocker.exe
+E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Blocker.pdb
+E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Blocker.csprojAssemblyReference.cache
+E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Blocker.csproj.CoreCompileInputs.cache

@@ -1,0 +1,7 @@
+E:\cyber\project2\POC\Client\CS_Client\SimpleGame\SimpleGame\bin\Debug\SimpleGame.exe.config
+E:\cyber\project2\POC\Client\CS_Client\SimpleGame\SimpleGame\bin\Debug\SimpleGame.exe
+E:\cyber\project2\POC\Client\CS_Client\SimpleGame\SimpleGame\bin\Debug\SimpleGame.pdb
+E:\cyber\project2\POC\Client\CS_Client\SimpleGame\SimpleGame\obj\Debug\SimpleGame.csprojAssemblyReference.cache
+E:\cyber\project2\POC\Client\CS_Client\SimpleGame\SimpleGame\obj\Debug\SimpleGame.csproj.CoreCompileInputs.cache
+E:\cyber\project2\POC\Client\CS_Client\SimpleGame\SimpleGame\obj\Debug\SimpleGame.exe
+E:\cyber\project2\POC\Client\CS_Client\SimpleGame\SimpleGame\obj\Debug\SimpleGame.pdb
