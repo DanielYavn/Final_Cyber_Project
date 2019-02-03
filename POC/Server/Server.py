@@ -1,3 +1,10 @@
+#################
+allow_playing = 1
+enc_key = "key"
+
+#################
+
+
 import socket, select
 
 HOST = ''
@@ -20,23 +27,17 @@ def send_all_messages(writeSock):
     for messege in toSend:
         clSock, data = messege
         if clSock in writeSock:
-            clSock.send(data)
-            clSock.send("")
-            clSock.send("")
+            clSock.send(str(len(data)).zfill(4)+data)
+            print "sent: ","{0:5}{1}".format(len(data),data)
             toSend.remove(messege)
 
 
-
 def respond(data):
-    GET_request(data)
     if data[0:7] == "GETKEY":
-
-        return str(1)
+        if allow_playing:
+            return "ALLOWED\n" + enc_key
+        return "DENIED"
     return "not recognized"
-
-def GET_request(data):
-    import re
-    print re.findall(r'GET (.*) HTTP',data)
 
 
 
@@ -53,7 +54,6 @@ while True:
         else:
             try:
                 data = manageSock.recv(BUFSIZ)
-                print data
             except socket.error, e:
                 clientsSock.remove(manageSock)
             else:

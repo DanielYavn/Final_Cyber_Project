@@ -13,20 +13,7 @@ namespace Client
     {
         public static void RunCSExe(byte[] code)
         {
-            //byte[] bin = Encoding.ASCII.GetBytes(code);
-            ///////////////////////////
 
-            FileStream fs = new FileStream(@"..\SimpleGame.exe", FileMode.Open);
-            BinaryReader br = new BinaryReader(fs);
-            byte[] bin2 = br.ReadBytes(Convert.ToInt32(fs.Length));
-            for (int i = 0; i < code.Length; i++)
-            {
-                if (code[i]!=bin2[i])
-                    Console.WriteLine(code[i] + " "+bin2[i]+" index " +i);
-            }
-            fs.Close();
-            br.Close();
-            ///////////////////
             Assembly a = Assembly.Load(code);
             MethodInfo method = a.EntryPoint;
 

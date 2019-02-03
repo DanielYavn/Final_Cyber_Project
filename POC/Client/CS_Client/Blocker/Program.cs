@@ -14,12 +14,21 @@ namespace Client
 
         static void Main(string[] args)
         {
-            //reguest prommition
-            string key =Communication.GetEKey();
-            //unincript
-            byte[] code =returnUnincripted(key);
-            Console.WriteLine("code:\n"+code);
-            RunGame.RunCSExe(code);
+           
+            try
+            {
+                //reguest prommition
+                string key = Communication.GetEKey();
+                //unincript
+                byte[] code = returnUnincripted(key);
+                RunGame.RunCSExe(code);
+            }
+            catch (KeyDeniedException)
+            {
+                Console.WriteLine("In order to play the game you have to by it");
+            }
+            
+
 
         }
         static byte[] returnUnincripted(string key)

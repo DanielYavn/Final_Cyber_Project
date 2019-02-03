@@ -7,3 +7,12 @@ E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Client.csproj.GenerateR
 E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Client.csproj.CoreCompileInputs.cache
 E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Client.exe
 E:\cyber\project2\POC\Client\CS_Client\Blocker\obj\Debug\Client.pdb
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\bin\Debug\Client.exe.config
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\bin\Debug\Client.exe
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\bin\Debug\Client.pdb
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\obj\Debug\Client.csprojAssemblyReference.cache
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\obj\Debug\Client.Properties.Resources.resources
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\obj\Debug\Client.csproj.GenerateResource.cache
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\obj\Debug\Client.csproj.CoreCompileInputs.cache
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\obj\Debug\Client.exe
+E:\cyber\Final_Cyber_Project\POC\Client\CS_Client\Blocker\obj\Debug\Client.pdb
