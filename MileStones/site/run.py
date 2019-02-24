@@ -1,5 +1,4 @@
-import sys
-print sys.path
+
 from siteCode import app
 
 
