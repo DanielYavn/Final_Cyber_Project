@@ -1,8 +1,8 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, send_from_directory
 from forms import RegistrationFrom, LoginFrom
-from models import User
+from models import User, GameDownload
 from siteCode import app, bcrypt, db
-from flask_login import login_user,logout_user,current_user, login_required
+from flask_login import login_user, logout_user, current_user, login_required
 
 
 @app.route("/")
@@ -39,6 +39,7 @@ def login():
             flash("log in for {0} was unsucsesfull".format(form.email.data), "danger")
     return render_template("login.html", form=form)
 
+
 @app.route("/logout")
 def logout():
     logout_user()
@@ -47,8 +48,24 @@ def logout():
 @app.route("/download_game")
 def download_game():
     if current_user.is_authenticated:
+
+        game = GameDownload(Crypto_key="Key", user_id=current_user.id)
+        #db.session.add(game)
+        current_user.games_downloaded.append(game)
+        db.session.commit()
+
+        path_to_dir = ".\\games\\"
+        filename = "just_txt.txt"
+
         flash("you are downloading the game", "success")
+
+        return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
     else:
         flash("you are not loggd in", "danger")
 
     return redirect(url_for("home"))
+
+
+@app.route("/run_permission/<int:gameId>")
+def run_permission(gameId):
+    pass
