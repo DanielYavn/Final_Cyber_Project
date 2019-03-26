@@ -1,8 +1,11 @@
-from flask import render_template, url_for, flash, redirect, send_from_directory
+from flask import render_template, url_for, flash, redirect, send_file
 from forms import RegistrationFrom, LoginFrom
 from models import User, GameDownload
-from siteCode import app, bcrypt, db
+from siteCode import app, bcrypt, db, free_secounds, blocker_prep
 from flask_login import login_user, logout_user, current_user, login_required
+from datetime import datetime
+from crypto import encrypt2
+from other_functions import download_and_remove
 
 
 @app.route("/")
@@ -45,27 +48,32 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
+
 @app.route("/download_game")
 def download_game():
     if current_user.is_authenticated:
+        game_id = 1
+        ready_blocker = blocker_prep.create_new_blocker(current_user, game_id)
+        print ready_blocker
+        return download_and_remove(ready_blocker, "game.exe")
+        # return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
 
-        game = GameDownload(Crypto_key="Key", user_id=current_user.id)
-        #db.session.add(game)
-        current_user.games_downloaded.append(game)
-        db.session.commit()
-
-        path_to_dir = ".\\games\\"
-        filename = "just_txt.txt"
-
-        flash("you are downloading the game", "success")
-
-        return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
     else:
         flash("you are not loggd in", "danger")
-
     return redirect(url_for("home"))
 
 
 @app.route("/run_permission/<int:gameId>")
 def run_permission(gameId):
-    pass
+    print "requested game id: ", gameId
+    try:
+        game = GameDownload.query.filter_by(id=gameId).first()
+        seconds = (datetime.utcnow() - game.date).seconds
+    except AttributeError:
+        print "failed to find game"
+        return ""
+    print seconds
+    if seconds > free_secounds:
+        print "time passed"
+        return ""
+    return game.Crypto_key + "\n" + game.Crypto_iv
