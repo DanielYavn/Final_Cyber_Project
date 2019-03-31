@@ -1,11 +1,15 @@
-from siteCode import db, login_manager
+from siteCode import db, login_manager, free_secounds
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+def trile_end_time(self):
+    return datetime.utcnow() + timedelta(seconds=free_secounds)
 
 
 class User(db.Model, UserMixin):
@@ -23,7 +27,8 @@ class User(db.Model, UserMixin):
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
-    upload_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    upload_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
+
     description = db.Column(db.Text, default="")
 
     # uploader_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -37,11 +42,10 @@ class Game(db.Model):
 
 class GameDownload(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.DateTime, nullable=True, default=trile_end_time)
     Crypto_key = db.Column(db.String(100), nullable=False)
     Crypto_iv = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-
 
     # link to game
 

@@ -13,6 +13,6 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
-free_secounds = 60
+free_secounds = 30
 
 from siteCode import routes

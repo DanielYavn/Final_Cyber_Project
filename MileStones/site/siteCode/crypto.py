@@ -3,15 +3,12 @@ from pkcs7 import PKCS7Encoder
 import os, random, base64
 
 
-def encrypt2(path):
+def encrypt(path):
     choice = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     key = ''.join(random.choice(choice) for m in xrange(32))
     iv = ''.join(random.choice(choice) for m in xrange(16))
 
     epath = os.path.abspath("./siteCode/egames/" + "e" + os.path.split(path)[-1])
-
-    aes = AES.new(key, AES.MODE_CBC, iv)
-    encoder = PKCS7Encoder()
 
     with open(path, "rb") as inf:
         aes = AES.new(key, AES.MODE_CBC, iv)
@@ -35,16 +32,21 @@ def encrypt2(path):
     return {"key": unicode(key), "iv": unicode(iv), "encrypted_code_path": epath}
 
 
-def encrypt(path):  # not encrypting
-    f = open(path, "rb")
-    code = f.read()
-    f.close()
+def no_encryption(path):  # not encrypting
+    choice = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    key = ''.join(random.choice(choice) for m in xrange(32))
+    iv = ''.join(random.choice(choice) for m in xrange(16))
 
-    encrypted_code = code
+    epath = os.path.abspath("./siteCode/egames/" + "e" + os.path.split(path)[-1])
 
-    epath = "./siteCode/egames/" + "e" + os.path.split(path)[-1]
+    with open(path, "rb") as inf:
 
-    ef = open(epath, "wb")
-    ef.write(encrypted_code)
-    ef.close()
-    return {"key": "Key", "encrypted_code_path": epath}
+        text = inf.read()
+
+        # base64 encode the cipher text for transport
+        enc_cipher = base64.b64encode(text)
+
+        with file(epath, "wb") as outf:
+            outf.write(enc_cipher)
+
+    return {"key": unicode(key), "iv": unicode(iv), "encrypted_code_path": epath}

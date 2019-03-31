@@ -107,45 +107,10 @@ namespace decryptor
             Console.WriteLine("key: {0}, iv {1}",key,iv);
 
             // defaults to CBC and PKCS7
-            var textEncoder = new UTF8Encoding();
-            var aes = new AesManaged();
-            aes.Mode = CipherMode.CBC;
-            aes.Padding = PaddingMode.PKCS7;
-            aes.Key = textEncoder.GetBytes(key); //textEncoder.GetBytes("x0z1asxLjLX1EWw8WScxyFHIDDWsScp1");
-            aes.IV = textEncoder.GetBytes(iv); //textEncoder.GetBytes("7msdl3r1TOZzaFs5");
-
-            var decryptor = aes.CreateDecryptor();
             byte[] encBytes = Convert.FromBase64String(enc_cipher);
-            byte[] decBytes = decryptor.TransformFinalBlock(encBytes, 0, encBytes.Length);
+           
 
-            byte[] paddingFixer = textEncoder.GetBytes("A_PADDING_FIXER");
-
-            bool paddingFixerExists = true;
-            for (int i = 0; i < paddingFixer.Length; i++)
-            {
-                if (decBytes[decBytes.Length - paddingFixer.Length + i] != paddingFixer[i])
-                {
-                    paddingFixerExists = false;
-                    break;
-                }
-            }
-            byte[] fixedDecBytes;
-            if (!paddingFixerExists)
-            {
-                Console.WriteLine("no Menual Padding");
-                fixedDecBytes = decBytes;
-            }
-            else
-            {
-                Console.WriteLine("Menual Padding");
-                fixedDecBytes = new byte[decBytes.Length - paddingFixer.Length];
-                for (int i = 0; i < fixedDecBytes.Length; i++)
-                {
-                    fixedDecBytes[i] = decBytes[i];
-                }
-            }
-
-            return fixedDecBytes;
+            return encBytes;
         }
 
     }

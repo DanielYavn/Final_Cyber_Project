@@ -1,11 +1,11 @@
 from flask import render_template, url_for, flash, redirect, send_file
 from forms import RegistrationFrom, LoginFrom
 from models import User, GameDownload
-from siteCode import app, bcrypt, db, free_secounds, blocker_prep
+from siteCode import app, bcrypt, db, blocker_prep
 from flask_login import login_user, logout_user, current_user, login_required
 from datetime import datetime
-from crypto import encrypt2
 from other_functions import download_and_remove
+from sqlalchemy import update
 
 
 @app.route("/")
@@ -53,8 +53,9 @@ def logout():
 def download_game():
     if current_user.is_authenticated:
         game_id = 1
-        ready_blocker = blocker_prep.create_new_blocker(current_user, game_id)
-        print ready_blocker
+        #ready_blocker = blocker_prep.create_new_blocker(current_user, game_id)
+        ready_blocker=blocker_prep.create_new_blocker_no_enc(current_user,game_id)
+
         return download_and_remove(ready_blocker, "game.exe")
         # return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
 
@@ -68,12 +69,20 @@ def run_permission(gameId):
     print "requested game id: ", gameId
     try:
         game = GameDownload.query.filter_by(id=gameId).first()
-        seconds = (datetime.utcnow() - game.date).seconds
     except AttributeError:
         print "failed to find game"
         return ""
-    print seconds
-    if seconds > free_secounds:
-        print "time passed"
-        return ""
+    print game.date
+    if game.date != None:
+        if datetime.utcnow() > game.date:
+            print "time passed by ", datetime.utcnow() - game.date
+            return ""
     return game.Crypto_key + "\n" + game.Crypto_iv
+
+
+@app.route("/buy_game")
+def buy_game():
+    GameDownload.query.order_by('-id').first().date = None
+    db.session.commit()
+    flash("game bought successfully", "success")
+    return redirect(url_for("home"))
