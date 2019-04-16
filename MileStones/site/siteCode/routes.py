@@ -1,6 +1,7 @@
-from flask import render_template, url_for, flash, redirect, send_file
-from forms import RegistrationFrom, LoginFrom
-from models import User, GameDownload
+from flask import render_template, url_for, flash, redirect, request, send_file
+from forms import RegistrationFrom, LoginFrom, SearchForm
+from tables import MyGamesTable, AllGamesTable
+from models import User, GameDownload, serch_games_downloaded
 from siteCode import app, bcrypt, db, blocker_prep
 from flask_login import login_user, logout_user, current_user, login_required
 from datetime import datetime
@@ -10,7 +11,8 @@ from sqlalchemy import update
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    table = AllGamesTable()
+    return render_template("home.html", all_games_table=table)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -49,12 +51,11 @@ def logout():
     return redirect(url_for("home"))
 
 
-@app.route("/download_game")
-def download_game():
+@app.route("/download_game/<int:gameId>")
+def download_game(gameId):
     if current_user.is_authenticated:
-        game_id = 1
-        #ready_blocker = blocker_prep.create_new_blocker(current_user, game_id)
-        ready_blocker=blocker_prep.create_new_blocker_no_enc(current_user,game_id)
+        ready_blocker = blocker_prep.create_new_blocker(current_user, gameId)
+        # ready_blocker=blocker_prep.create_new_blocker_no_enc(current_user,game_id)
 
         return download_and_remove(ready_blocker, "game.exe")
         # return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
@@ -82,7 +83,30 @@ def run_permission(gameId):
 
 @app.route("/buy_game")
 def buy_game():
-    GameDownload.query.order_by('-id').first().date = None
+    GameDownload.query.order_by('id')[-1].date = None
     db.session.commit()
     flash("game bought successfully", "success")
     return redirect(url_for("home"))
+
+
+@app.route("/my_games", methods=['GET', 'POST'])
+def my_games():
+    if current_user.is_authenticated:
+        serch = SearchForm()
+        if request.method == 'POST':
+            games = serch_games_downloaded(serch.search_bar.data, current_user)
+        else:
+            games = games = serch_games_downloaded("", current_user)
+
+        # games = GameDownload.query.filter_by(user_id=current_user.id)
+        table = MyGamesTable(games)
+
+        return render_template("search.html", form=serch, table=table)
+
+    else:
+        flash("you have to login", "danger")
+
+
+@app.route("/upload", methods=['GET', 'POST'])
+def upload():
+    return "upload"

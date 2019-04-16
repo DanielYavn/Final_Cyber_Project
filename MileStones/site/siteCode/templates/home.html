@@ -4,7 +4,12 @@
 <a href="{{url_for('register')}}">register</a></br>
 <a href="{{url_for('login')}}">login</a>
 <a href="{{url_for('logout')}}">logout</a></br>
-<a href="{{url_for('download_game')}}">download game</a></br>
-<a href="{{url_for('buy_game')}}">buy game</a></br>
+<a href="{{url_for('my_games')}}">games</a></br>
+<a href="{{url_for('upload')}}">upload</a>
+
+
+<h2>our games</h2>
+{{all_games_table}}
+
 
 {%endblock content%}

@@ -9,12 +9,14 @@ decryptor_no_enc_path = os.path.abspath(r"./siteCode/ready_blockers/decryptor_no
 
 
 def compile_blocker(blocker_path, e_game_path, id_path):
-    ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Roslyn\csc.exe"'
-    # ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\Roslyn\csc.exe"'
+    if os.environ['COMPUTERNAME']=='DESKTOP-NDHRRRG':
+        ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Roslyn\csc.exe"'#home
+    else:
+        ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\Roslyn\csc.exe"' #cyber
     new_file = blocker_path
     code_file = e_game_path
     id_file = id_path
-    blocker_code_file = decryptor_no_enc_path #decryptor_path
+    blocker_code_file = decryptor_path
     rec_pat = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Xamarin.VisualStudio\Xamarin.Inspector.Windows\Client"
     command = ces_path + \
               " /out:" + new_file + \
@@ -58,7 +60,7 @@ def create_new_blocker(user, game_id):
     e_dict = crypto.encrypt(game_path)
 
     # create GameDownloaded
-    game = models.GameDownload(Crypto_key=e_dict["key"], Crypto_iv=e_dict["iv"], user_id=user.id)
+    game = models.GameDownload(Crypto_key=e_dict["key"], Crypto_iv=e_dict["iv"], user_id=user.id,game_id=game_id)
     user.games_downloaded.append(game)
     db.session.flush()  # needed?
 

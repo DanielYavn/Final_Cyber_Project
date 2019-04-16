@@ -1,0 +1,26 @@
+{%extends "layout.html"%}
+{%block content%}
+<h1> Serch</h1>
+<div>
+    <form method="POST" action="">
+        {{form.hidden_tag()}}
+        <fieldset>
+            <div>
+                {%if form.search_bar.errors %}
+                <div>
+                    {% for error in form.search_bar.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                {%else%}
+                {{form.search_bar(class="form-control form-control-lg")}}
+                {% endif %}
+
+                {{form.submit()}}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{{table}}
+{%endblock content%}

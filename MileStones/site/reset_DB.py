@@ -9,7 +9,10 @@ db.create_all()
 hashed_pw = bcrypt.generate_password_hash("p123456").decode("utf-8")
 new_user = User(username="danielY", email="yavn.daniel@gmail.com", password=hashed_pw)
 db.session.add(new_user)
-basic_game = Game(id=1, name="basic", description="basic")
-#clean games
+base_game = Game(id=1, name="basic", description="basic", uploader=new_user)
+db.session.add(base_game)
+new_user.games_uploaded.append(base_game)
+
+# clean games
 
 db.session.commit()

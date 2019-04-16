@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
 from models import User
 
@@ -24,3 +24,13 @@ class LoginFrom(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     remember = BooleanField("keep me loggd in")
     submit = SubmitField("Login")
+
+
+class SearchForm(FlaskForm):
+    search_bar = StringField('search')
+    submit = SubmitField('Search')
+
+
+class UploadForm(FlaskForm):
+    name = StringField("game name")
+    game_file = FileField("youre game")

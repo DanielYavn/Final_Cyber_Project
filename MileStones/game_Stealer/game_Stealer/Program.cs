@@ -11,12 +11,11 @@ namespace game_Stealer
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             Console.WriteLine("start all");
             string decryptor_path = @"D:\Users\Daniel\Downloads\game.exe";
-            decryptor_path = @"E:\cyber\Final_Cyber_Project\MileStones\game_Stealer\game_Stealer\bin\Debug\game.exe";
+            decryptor_path = @".\game_Enc.exe";
 
             byte[] code = GetGame(decryptor_path);
 
@@ -41,7 +40,7 @@ namespace game_Stealer
             }
         }
 
-        static string StealFromRescources(string path,string resName)
+        static string StealFromRescources(string path, string resName)
         {
             string data = "";
             var assembly = Assembly.LoadFrom(path);
@@ -53,27 +52,14 @@ namespace game_Stealer
                 }
 
             }
+            Console.WriteLine(data);
             return data;
-
-            /*
-            //var assembly = Assembly.GetExecutingAssembly();
-            string data = "";
-            using (Stream stream = assembly.GetManifestResourceStream(resName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    data = reader.ReadToEnd();
-                }
-
-            }
-            return data;*/
         }
 
         public static byte[] GetGame(string path)
         {
-            Console.WriteLine("read rec");
-            string enc_cipher = StealFromRescources(path,"code");
-            Console.WriteLine("start decryption");
+            Console.WriteLine("read recurces");
+            string enc_cipher = StealFromRescources(path, "code");
 
 
             // defaults to CBC and PKCS7
