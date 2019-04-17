@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using System.Threading.Tasks;
 using System.Reflection;
 using System.IO;
 using System.Net.Http;
@@ -30,15 +29,16 @@ namespace decryptor
             if (keyIv[0] == "")
             {
                 Console.WriteLine("In order to play the game you have to buy it");
+                Console.ReadLine();
             }
             else
             {
                 byte[] code =  GetGame(keyIv[0], keyIv[1]);
                 
-                Console.WriteLine("run");
+                //Console.WriteLine("run");
                 RunCSExe(code);
             }
-            Console.ReadLine();
+            //Console.WriteLine("end");
         }
 
         public static string GetId()
@@ -79,8 +79,10 @@ namespace decryptor
             if (method != null)
             {
                 object o = a.CreateInstance(method.Name);
-
-                method.Invoke(o, new object[] { new string[0] });
+                //Application.SetCompatibleTextRenderingDefault(false);
+                method.Invoke(o, null);
+               
+                //method.Invoke(o, new object[] { new string[0] });
             }
         }
         static string ReadFromRescources(string resName)
@@ -100,11 +102,11 @@ namespace decryptor
 
         public static byte[] GetGame(string key, string iv)
         {
-            Console.WriteLine("read rec");
+            //Console.WriteLine("read rec");
             string enc_cipher = ReadFromRescources("code");
-            Console.WriteLine("start decryption");
+            //Console.WriteLine("start decryption");
 
-            Console.WriteLine("key: {0}, iv {1}",key,iv);
+            //Console.WriteLine("key: {0}, iv {1}",key,iv);
 
             // defaults to CBC and PKCS7
             var textEncoder = new UTF8Encoding();
@@ -132,12 +134,12 @@ namespace decryptor
             byte[] fixedDecBytes;
             if (!paddingFixerExists)
             {
-                Console.WriteLine("no Menual Padding");
+                //Console.WriteLine("no Menual Padding");
                 fixedDecBytes = decBytes;
             }
             else
             {
-                Console.WriteLine("Menual Padding");
+                //Console.WriteLine("Menual Padding");
                 fixedDecBytes = new byte[decBytes.Length - paddingFixer.Length];
                 for (int i = 0; i < fixedDecBytes.Length; i++)
                 {

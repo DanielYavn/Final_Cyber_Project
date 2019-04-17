@@ -1,18 +1,15 @@
 import subprocess, os, time
 from siteCode import crypto, models, db
-import commands
 
 decryptor_path = os.path.abspath(r".\siteCode\ready_blockers\decryptor.cs")
 decryptor_no_enc_path = os.path.abspath(r"./siteCode/ready_blockers/decryptor_noenc.cs")
 
 
-
-
 def compile_blocker(blocker_path, e_game_path, id_path):
-    if os.environ['COMPUTERNAME']=='DESKTOP-NDHRRRG':
-        ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Roslyn\csc.exe"'#home
+    if os.environ['COMPUTERNAME'] == 'DESKTOP-NDHRRRG':
+        ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Roslyn\csc.exe"'  # home
     else:
-        ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\Roslyn\csc.exe"' #cyber
+        ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\Roslyn\csc.exe"'  # cyber
     new_file = blocker_path
     code_file = e_game_path
     id_file = id_path
@@ -23,6 +20,7 @@ def compile_blocker(blocker_path, e_game_path, id_path):
               " /res:" + code_file + ",code,private  " + " /res:" + id_file + ",id,private " + \
               "/reference:System.Net.Http.dll /reference:System.Security.Cryptography.Primitives.dll " + \
               blocker_code_file
+                #"/target:winexe " + \
     """
     home:
     "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Roslyn\csc.exe"
@@ -55,12 +53,13 @@ def create_new_blocker(user, game_id):
     games_dir = "./siteCode/games/"
     game_path = os.path.abspath(games_dir + str(game_id) + ".exe")
     ready_blocker = os.path.abspath(r".\siteCode\ready_blockers\\" + str(user.id) + str(game_id) + ".exe")
+    print ready_blocker
     # G:\cyber\Final_Cyber_Project\MileStones\Site\siteCode\ready_blockers
     # encrypt file
     e_dict = crypto.encrypt(game_path)
 
     # create GameDownloaded
-    game = models.GameDownload(Crypto_key=e_dict["key"], Crypto_iv=e_dict["iv"], user_id=user.id,game_id=game_id)
+    game = models.GameDownload(Crypto_key=e_dict["key"], Crypto_iv=e_dict["iv"], user_id=user.id, game_id=game_id)
     user.games_downloaded.append(game)
     db.session.flush()  # needed?
 
@@ -105,5 +104,3 @@ def create_new_blocker_no_enc(user, game_id):
     os.remove(id_path)
     return ready_blocker
     # return download_and_remove(e_dict["encrypted_code_path"], filename)
-
-

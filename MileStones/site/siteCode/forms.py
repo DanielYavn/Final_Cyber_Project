@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from flask_wtf.file import FileField, FileRequired
 from wtforms.validators import DataRequired, Length, Email, ValidationError
 from models import User
 
@@ -32,5 +33,6 @@ class SearchForm(FlaskForm):
 
 
 class UploadForm(FlaskForm):
-    name = StringField("game name")
-    game_file = FileField("youre game")
+    name = StringField("game name", validators=[DataRequired()])
+    game_file = FileField("your game")#, validators=[DataRequired()])
+    upload = SubmitField("upload")

@@ -1,0 +1,30 @@
+{%extends "layout.html"%}
+{%block content%}
+<h1> Upload</h1>
+<div>
+    <form method="POST" enctype="multipart/form-data">
+
+        {{form.hidden_tag()}}
+        <fieldset>
+            <div>
+                    {{form.name.label()}}
+                    {%if form.name.errors %}
+                        {{form.name}}
+                        <div>
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                    {%else%}
+                        {{form.name}}
+                    {% endif %}
+                </div>
+                {{form.game_file.label}}
+                {{form.game_file}}
+            </div>
+            {{form.upload}}
+        </fieldset>
+    </form>
+</div>
+{%endblock content%}

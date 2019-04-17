@@ -1,6 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, send_file
-from forms import RegistrationFrom, LoginFrom, SearchForm
+from forms import RegistrationFrom, LoginFrom, SearchForm, UploadForm
 from tables import MyGamesTable, AllGamesTable
+from uploads import upload_game
 from models import User, GameDownload, serch_games_downloaded
 from siteCode import app, bcrypt, db, blocker_prep
 from flask_login import login_user, logout_user, current_user, login_required
@@ -109,4 +110,21 @@ def my_games():
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
-    return "upload"
+    form = UploadForm(csrf_enabled=False)
+    print request.method
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'game_file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['game_file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+        # check file
+
+        upload_game(file, form, current_user)
+        flash("Sucsess")
+
+    return render_template("upload.html", form=form)

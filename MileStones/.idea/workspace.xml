@@ -2,20 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28045608-f0b5-4fdb-949b-a99a012798d1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/site/siteCode/templates/serch.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/site/siteCode/templates/upload.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/site/siteCode/upload.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_Stealer/game_Stealer/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/game_Stealer/game_Stealer/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/ReadMe.txt" beforeDir="false" afterPath="$PROJECT_DIR$/site/ReadMe.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/reset_DB.py" beforeDir="false" afterPath="$PROJECT_DIR$/site/reset_DB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/siteCode/blocker_prep.py" beforeDir="false" afterPath="$PROJECT_DIR$/site/siteCode/blocker_prep.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/siteCode/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/site/siteCode/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/siteCode/egames/id_9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Site/siteCode/blocker_prep.py" beforeDir="false" afterPath="$PROJECT_DIR$/Site/siteCode/blocker_prep.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/siteCode/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/site/siteCode/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/siteCode/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/site/siteCode/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/siteCode/other_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/site/siteCode/other_functions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/siteCode/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/site/siteCode/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/siteCode/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/site/siteCode/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/siteCode/templates/permissions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/siteCode/templates/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/site/siteCode/templates/search.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../POC/Client/CS_Client/.vs/CS_Client/v15/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../POC/Client/CS_Client/.vs/CS_Client/v15/.suo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../POC/Client/CS_Client/.vs/CS_Client/v15/Server/sqlite3/storage.ide-shm" beforeDir="false" afterPath="$PROJECT_DIR$/../POC/Client/CS_Client/.vs/CS_Client/v15/Server/sqlite3/storage.ide-shm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../POC/Client/CS_Client/.vs/CS_Client/v15/Server/sqlite3/storage.ide-wal" beforeDir="false" afterPath="$PROJECT_DIR$/../POC/Client/CS_Client/.vs/CS_Client/v15/Server/sqlite3/storage.ide-wal" afterDir="false" />
@@ -51,20 +44,20 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cs" value="2" />
+          <entry key="cs" value="3" />
           <entry key="db" value="8" />
-          <entry key="exe" value="2" />
-          <entry key="html" value="16" />
-          <entry key="py" value="88" />
+          <entry key="exe" value="4" />
+          <entry key="html" value="24" />
+          <entry key="py" value="105" />
           <entry key="txt" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="C#" value="2" />
-          <entry key="HTML" value="16" />
-          <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="88" />
+          <entry key="C#" value="3" />
+          <entry key="HTML" value="24" />
+          <entry key="PLAIN_TEXT" value="9" />
+          <entry key="Python" value="105" />
           <entry key="SQL" value="8" />
         </counts>
       </usages-collector>
@@ -73,17 +66,17 @@
           <entry key="Python Console" value="1162" />
           <entry key="cs" value="2" />
           <entry key="db" value="10" />
-          <entry key="html" value="382" />
-          <entry key="py" value="9626" />
+          <entry key="html" value="526" />
+          <entry key="py" value="10412" />
           <entry key="txt" value="33" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="C#" value="2" />
-          <entry key="HTML" value="382" />
+          <entry key="HTML" value="526" />
           <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="10788" />
+          <entry key="Python" value="11574" />
           <entry key="SQL" value="10" />
         </counts>
       </usages-collector>
@@ -134,15 +127,65 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Site/siteCode/routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
-              <caret line="111" column="19" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
+            <state relative-caret-position="63">
+              <caret line="72" column="57" selection-start-line="72" selection-start-column="57" selection-end-line="72" selection-end-column="57" />
               <folding>
-                <element signature="e#0#78#0" expanded="true" />
-                <marker date="1555422772000" expanded="true" signature="3732:3753" ph="..." />
+                <element signature="e#0#79#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Site/siteCode/uploads.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Site/siteCode/blocker_prep.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/upload.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Site/siteCode/other_functions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/site-packages/werkzeug/wrappers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="248">
+              <caret line="81" selection-start-line="81" selection-end-line="81" />
             </state>
           </provider>
         </entry>
@@ -150,12 +193,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Site/siteCode/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="26" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+            <state>
+              <caret column="31" lean-forward="true" selection-start-column="31" selection-end-column="31" />
               <folding>
-                <element signature="e#0#32#0" expanded="true" />
-                <marker date="1555422772000" expanded="true" signature="1110:1115" ph="..." />
-                <marker date="1555422772000" expanded="true" signature="1215:1292" ph="..." />
+                <marker date="1555495252000" expanded="true" signature="1150:1155" ph="..." />
+                <marker date="1555495252000" expanded="true" signature="1255:1426" ph="..." />
               </folding>
             </state>
           </provider>
@@ -164,71 +206,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Site/siteCode/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="16" column="12" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="12" />
-              <folding>
-                <marker date="1555409756000" expanded="true" signature="2013:2135" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Site/reset_DB.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Site/siteCode/tables.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-              <folding>
-                <element signature="e#0#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Site/siteCode/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/Python27/Lib/site-packages/babel/dates.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="377" selection-start-line="377" selection-end-line="377" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/layout.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="238">
+              <caret line="48" column="8" selection-start-line="48" selection-start-column="4" selection-end-line="48" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -238,8 +217,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -272,21 +251,25 @@
         <option value="$PROJECT_DIR$/compiling_test/test.py" />
         <option value="$PROJECT_DIR$/compiling_test/comp.py" />
         <option value="$PROJECT_DIR$/crypto tests/encrypt.py" />
-        <option value="$PROJECT_DIR$/Site/siteCode/ready_blockers/decryptor.cs" />
         <option value="$PROJECT_DIR$/Site/siteCode/crypto.py" />
         <option value="$PROJECT_DIR$/Site/siteCode/templates/tables.py" />
         <option value="$PROJECT_DIR$/Site/ReadMe.txt" />
-        <option value="$PROJECT_DIR$/Site/siteCode/blocker_prep.py" />
         <option value="$PROJECT_DIR$/Site/siteCode/other_functions.py" />
         <option value="$PROJECT_DIR$/Site/siteCode/templates/login.html" />
         <option value="$PROJECT_DIR$/Site/siteCode/templates/serch.html" />
         <option value="$PROJECT_DIR$/Site/reset_DB.py" />
         <option value="$PROJECT_DIR$/Site/siteCode/models.py" />
         <option value="$PROJECT_DIR$/Site/siteCode/__init__.py" />
-        <option value="$PROJECT_DIR$/Site/siteCode/tables.py" />
-        <option value="$PROJECT_DIR$/Site/siteCode/forms.py" />
         <option value="$PROJECT_DIR$/Site/siteCode/templates/home.html" />
+        <option value="$PROJECT_DIR$/Site/siteCode/tables.py" />
+        <option value="$PROJECT_DIR$/Site/siteCode/templates/search.html" />
+        <option value="$PROJECT_DIR$/Site/siteCode/upload.py" />
         <option value="$PROJECT_DIR$/Site/siteCode/routes.py" />
+        <option value="$PROJECT_DIR$/Site/siteCode/forms.py" />
+        <option value="$PROJECT_DIR$/Site/siteCode/templates/upload.html" />
+        <option value="$PROJECT_DIR$/Site/siteCode/uploads.py" />
+        <option value="$PROJECT_DIR$/Site/siteCode/ready_blockers/decryptor.cs" />
+        <option value="$PROJECT_DIR$/Site/siteCode/blocker_prep.py" />
       </list>
     </option>
   </component>
@@ -384,6 +367,13 @@
               <item name="MileStones" type="462c0819:PsiDirectoryNode" />
               <item name="Site" type="462c0819:PsiDirectoryNode" />
               <item name="siteCode" type="462c0819:PsiDirectoryNode" />
+              <item name="games" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MileStones" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MileStones" type="462c0819:PsiDirectoryNode" />
+              <item name="Site" type="462c0819:PsiDirectoryNode" />
+              <item name="siteCode" type="462c0819:PsiDirectoryNode" />
               <item name="ready_blockers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -425,7 +415,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.reset_DB">
+  <component name="RunManager" selected="Python.run">
     <configuration name="reset_DB" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MileStones" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -439,6 +429,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Site/reset_DB.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="routes" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MileStones" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Site/siteCode" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Site/siteCode/routes.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -471,11 +482,13 @@
     <list>
       <item itemvalue="Python.run" />
       <item itemvalue="Python.reset_DB" />
+      <item itemvalue="Python.routes" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.run" />
         <item itemvalue="Python.reset_DB" />
+        <item itemvalue="Python.routes" />
       </list>
     </recent_temporary>
   </component>
@@ -510,8 +523,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32821497" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26199615" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990665" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5460653" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39827254" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32821497" />
@@ -530,7 +543,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32821497" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26199615" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990665" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39827254" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32821497" />
@@ -551,22 +564,19 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Site/siteCode/routes.py</url>
-          <option name="timeStamp" value="1" />
+          <line>126</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app_protector_srv/run.py" />
-    <entry file="file://$PROJECT_DIR$/Site/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/reset_DB.py" />
     <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/models.py" />
     <entry file="file://$PROJECT_DIR$/Site/siteCode/delete_and_reset_DB.py" />
     <entry file="file://$PROJECT_DIR$/Site/siteCode/games/just_txt.txt" />
     <entry file="file://$PROJECT_DIR$/Site/siteCode/decryptor/decryptor/bin/Debug/decryptor.exe" />
     <entry file="file://$PROJECT_DIR$/Site/siteCode/games/decryptor.exe" />
     <entry file="file://C:/Python27/Lib/site-packages/werkzeug/test.py" />
-    <entry file="file://C:/Python27/Lib/site-packages/werkzeug/wrappers.py" />
     <entry file="file://C:/Python27/Lib/site-packages/sqlalchemy/engine/default.py" />
     <entry file="file://C:/Python27/Lib/site-packages/Flask-1.0.2-py2.7.egg/flask/app.py" />
     <entry file="file://$PROJECT_DIR$/compiling_test/hi.py" />
@@ -596,13 +606,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/ready_blockers/decryptor.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="683">
-          <caret line="84" column="9" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Site/run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -610,45 +613,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/crypto.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="28" column="31" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/flask/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="2308" selection-start-line="2308" selection-end-line="2308" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/-762174762/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
           <caret line="764" column="8" selection-start-line="764" selection-start-column="8" selection-end-line="764" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/other_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="45" lean-forward="true" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -666,13 +634,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/blocker_prep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-163">
-          <caret line="63" column="38" lean-forward="true" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/sqlalchemy/ext/declarative/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="421">
@@ -687,17 +648,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/layout.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/babel/dates.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
           <caret line="377" selection-start-line="377" selection-end-line="377" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/tables.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="33" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/reset_DB.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/layout.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="18" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="15" />
         </state>
       </provider>
     </entry>
@@ -711,59 +696,164 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Site/reset_DB.py">
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/upload.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="12" />
+        <state relative-caret-position="85">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
           <folding>
-            <marker date="1555409756000" expanded="true" signature="2013:2135" ph="..." />
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/tables.py">
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/crypto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/flask/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="2308" selection-start-line="2308" selection-end-line="2308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/werkzeug/debug/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="302" selection-start-line="302" selection-end-line="302" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/werkzeug/serving.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="292" selection-start-line="292" selection-end-line="292" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/SocketServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="595" selection-start-line="595" selection-end-line="595" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="753" selection-start-line="753" selection-end-line="753" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/BaseHTTPServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="339" selection-start-line="339" selection-end-line="339" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Site/siteCode/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="26" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+        <state>
+          <caret column="31" lean-forward="true" selection-start-column="31" selection-end-column="31" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
-            <marker date="1555422772000" expanded="true" signature="1110:1115" ph="..." />
-            <marker date="1555422772000" expanded="true" signature="1215:1292" ph="..." />
+            <marker date="1555495252000" expanded="true" signature="1150:1155" ph="..." />
+            <marker date="1555495252000" expanded="true" signature="1255:1426" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/home.html">
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/search.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        <state relative-caret-position="34">
+          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="22" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="20" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/games/7.exe">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/games/6.exe">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/uploads.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/ready_blockers/decryptor.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="76" column="45" lean-forward="true" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/templates/upload.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/werkzeug/wrappers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="48" column="8" selection-start-line="48" selection-start-column="4" selection-end-line="48" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Site/siteCode/routes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="111" column="19" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
+        <state relative-caret-position="63">
+          <caret line="72" column="57" selection-start-line="72" selection-start-column="57" selection-end-line="72" selection-end-column="57" />
           <folding>
-            <element signature="e#0#78#0" expanded="true" />
-            <marker date="1555422772000" expanded="true" signature="3732:3753" ph="..." />
+            <element signature="e#0#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/other_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Site/siteCode/blocker_prep.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>
