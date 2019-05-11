@@ -7,23 +7,54 @@
         {{form.hidden_tag()}}
         <fieldset>
             <div>
-                    {{form.name.label()}}
-                    {%if form.name.errors %}
-                        {{form.name}}
-                        <div>
-                            {% for error in form.name.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
+                {{form.name.label()}}
+                {%if form.name.errors %}
+                    {{form.name}}
+                    <div>
+                        {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
 
-                    {%else%}
-                        {{form.name}}
-                    {% endif %}
-                </div>
-                {{form.game_file.label}}
-                {{form.game_file}}
+                {%else%}
+                    {{form.name}}
+                {% endif %}
             </div>
+            <div>
+                {{form.game_file.label}}
+                {%if form.game_file.errors %}
+                    {{form.game_file}}
+                    <div>
+                        {% for error in form.game_file.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {%else%}
+                    {{form.game_file}}
+                {% endif %}
+
+            </div>
+            <div>
+                {{form.description.label}}
+                {%if form.description.errors %}
+                    {{form.description}}
+                    <div>
+                        {% for error in form.description.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {%else%}
+                    {{form.description}}
+                {% endif %}
+
+            </div>
+            <dir>
+                {{form.days.label}} {{form.days}} {{form.hours.label}} {{form.hours}} {{form.minutes.label}} {{form.minutes}}
+            </dir>
             {{form.upload}}
+
         </fieldset>
     </form>
 </div>

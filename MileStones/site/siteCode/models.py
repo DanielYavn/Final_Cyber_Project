@@ -9,7 +9,15 @@ def load_user(user_id):
 
 
 def trile_end_time(self):
-    return datetime.utcnow() + timedelta(seconds=free_secounds)
+    user = User.query.filter_by(id=self.get_current_parameters()["user_id"]).first()
+    current_game = Game.query.filter_by(id=self.get_current_parameters()["game_id"]).first()
+    was_downloaded = False
+    for game_downloaded in user.games_downloaded:
+        if game_downloaded.game is current_game:
+            return game_downloaded.date
+
+    trile_time = current_game.trile_time
+    return datetime.utcnow() + timedelta(seconds=trile_time)
 
 
 class User(db.Model, UserMixin):
@@ -29,12 +37,13 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     upload_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
-
+    cost = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, default="")
 
+    trile_time = db.Column(db.Integer, default=free_secounds)  # in secounds
 
     # categort
-    # rating
+    rating = db.Column(db.Integer, default=None)
     # pictuer
 
     uploader = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -42,6 +51,11 @@ class Game(db.Model):
 
     def __repr__(self):
         return "Game({0},{1})".format(self.id, self.name)
+
+    def convert_rating(self, rating):
+        if rating is None:
+            return "No votes"
+        return str(rating)
 
 
 class GameDownload(db.Model):
@@ -57,7 +71,13 @@ class GameDownload(db.Model):
         return "GameDownload({0},{1},{2})".format(self.id, self.date, self.user_id)
 
 
-def serch_games_downloaded(search, user):
+def search_games_downloaded(search, user):
     if not search:
         return GameDownload.query.filter_by(user_id=user.id).all()
     return GameDownload.query.filter_by(user_id=user.id).join(Game).filter(Game.name.ilike("%{}%".format(search))).all()
+
+
+def search_games(search):
+    if not search:
+        return Game.query.all()
+    return Game.query.filter(Game.name.ilike("%{}%".format(search))).all()

@@ -12,6 +12,7 @@ using System.Reflection;
 using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 
 
@@ -23,50 +24,37 @@ namespace decryptor
 
         static void Main(string[] args)
         {
-            Console.WriteLine("start all");
-            string id = GetId();
-            string[] keyIv = GetKey(url + id).Split( new char [] {'\n'});
+            string id = ReadFromRescurces("id");
+            string[] keyIv = null;
+            try {
+                keyIv = GetKey(url + id).Split(new char[] { '\n' });
+            }
+            catch (AggregateException)
+            {
+                server_down_MB();
+            }
             if (keyIv[0] == "")
             {
-                Console.WriteLine("In order to play the game you have to buy it");
-                Console.ReadLine();
+                buy_game_MB();
             }
             else
             {
-                byte[] code =  GetGame(keyIv[0], keyIv[1]);
-                
-                //Console.WriteLine("run");
+                byte[] code = GetGame(keyIv[0], keyIv[1]);
                 RunCSExe(code);
             }
-            //Console.WriteLine("end");
-        }
-
-        public static string GetId()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            string id;
-            using (Stream stream = assembly.GetManifestResourceStream("id"))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                id = reader.ReadToEnd();
             }
-            return id;
-        }
+
         public static string GetKey(string url)
         {
             string key = "";
             HttpClient client = new HttpClient();
             HttpResponseMessage response;
-            try
-            {
-                response = client.GetAsync(url).Result;
-                response.EnsureSuccessStatusCode();
-            }
-            catch
-            {
-                Console.WriteLine("communication error");
-                return "";
-            }
+
+
+            response = client.GetAsync(url).Result;
+            response.EnsureSuccessStatusCode();
+
+
             key = response.Content.ReadAsStringAsync().Result;
             return key;
         }
@@ -79,13 +67,18 @@ namespace decryptor
             if (method != null)
             {
                 object o = a.CreateInstance(method.Name);
-                //Application.SetCompatibleTextRenderingDefault(false);
-                method.Invoke(o, null);
-               
-                //method.Invoke(o, new object[] { new string[0] });
+                try
+                {
+                    method.Invoke(o, null);
+                }
+                catch
+                {
+                    method.Invoke(o, new object[] { new string[0] });
+                }
+                //
             }
         }
-        static string ReadFromRescources(string resName)
+        static string ReadFromRescurces(string resName)
         {
             var assembly = Assembly.GetExecutingAssembly();
             string data = "";
@@ -102,19 +95,16 @@ namespace decryptor
 
         public static byte[] GetGame(string key, string iv)
         {
-            //Console.WriteLine("read rec");
-            string enc_cipher = ReadFromRescources("code");
-            //Console.WriteLine("start decryption");
+            string enc_cipher = ReadFromRescurces("code");
 
-            //Console.WriteLine("key: {0}, iv {1}",key,iv);
 
             // defaults to CBC and PKCS7
             var textEncoder = new UTF8Encoding();
             var aes = new AesManaged();
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
-            aes.Key = textEncoder.GetBytes(key); //textEncoder.GetBytes("x0z1asxLjLX1EWw8WScxyFHIDDWsScp1");
-            aes.IV = textEncoder.GetBytes(iv); //textEncoder.GetBytes("7msdl3r1TOZzaFs5");
+            aes.Key = textEncoder.GetBytes(key); 
+            aes.IV = textEncoder.GetBytes(iv); 
 
             var decryptor = aes.CreateDecryptor();
             byte[] encBytes = Convert.FromBase64String(enc_cipher);
@@ -134,12 +124,10 @@ namespace decryptor
             byte[] fixedDecBytes;
             if (!paddingFixerExists)
             {
-                //Console.WriteLine("no Menual Padding");
                 fixedDecBytes = decBytes;
             }
             else
             {
-                //Console.WriteLine("Menual Padding");
                 fixedDecBytes = new byte[decBytes.Length - paddingFixer.Length];
                 for (int i = 0; i < fixedDecBytes.Length; i++)
                 {
@@ -149,6 +137,27 @@ namespace decryptor
 
             return fixedDecBytes;
         }
+        public static void server_down_MB()
+        {
+            string message = "Could not run the game due to network error. Please check your internet connection and try again later.";
+            string caption = "Connection Error";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            DialogResult result;
 
+            // Displays the MessageBox.
+            result = MessageBox.Show(message, caption, buttons);
+            System.Environment.Exit(1);
+        }
+        public static void buy_game_MB()
+        {
+            string message = "Could not run the game because trial period expired. Please buy the game at our site and try again later.";
+            string caption = "Trial Period Expired";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            DialogResult result;
+
+            // Displays the MessageBox.
+            result = MessageBox.Show(message, caption, buttons);
+            System.Environment.Exit(1);
+        }
     }
 }

@@ -1,8 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request, send_file
-from forms import RegistrationFrom, LoginFrom, SearchForm, UploadForm
+from forms import RegistrationFrom, LoginFrom, SearchForm, UploadForm  # , GameForm
 from tables import MyGamesTable, AllGamesTable
 from uploads import upload_game
-from models import User, GameDownload, serch_games_downloaded
+from models import Game, User, GameDownload, search_games_downloaded, search_games
 from siteCode import app, bcrypt, db, blocker_prep
 from flask_login import login_user, logout_user, current_user, login_required
 from datetime import datetime
@@ -10,10 +10,16 @@ from other_functions import download_and_remove
 from sqlalchemy import update
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
-    table = AllGamesTable()
-    return render_template("home.html", all_games_table=table)
+    search = SearchForm()
+    if request.method == 'POST':
+        games = search_games(search.search_bar.data)
+    else:
+        games = search_games("")
+
+    table = AllGamesTable(games)
+    return render_template("home.html", form=search, all_games_table=table)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -55,10 +61,10 @@ def logout():
 @app.route("/download_game/<int:gameId>")
 def download_game(gameId):
     if current_user.is_authenticated:
-        ready_blocker = blocker_prep.create_new_blocker(current_user, gameId)
+        ready_blocker, gamename = blocker_prep.create_new_blocker(current_user, gameId)
         # ready_blocker=blocker_prep.create_new_blocker_no_enc(current_user,game_id)
 
-        return download_and_remove(ready_blocker, "game.exe")
+        return download_and_remove(ready_blocker, gamename + ".exe")
         # return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
 
     else:
@@ -75,16 +81,23 @@ def run_permission(gameId):
         print "failed to find game"
         return ""
     print game.date
-    if game.date != None:
+    if game.date is not None:
         if datetime.utcnow() > game.date:
             print "time passed by ", datetime.utcnow() - game.date
             return ""
     return game.Crypto_key + "\n" + game.Crypto_iv
 
 
-@app.route("/buy_game")
-def buy_game():
-    GameDownload.query.order_by('id')[-1].date = None
+@app.route("/buy_game/<int:gameId>")
+def buy_game(gameId):
+    if not current_user.is_authenticated:
+        flash("you are not loggd in", "danger")
+        redirect(url_for("home"))
+
+    game_type_id = GameDownload.query.filter_by(id=gameId).first().game_id
+    for game in current_user.games_downloaded:
+        if game.game_id == game_type_id:
+            game.date = None
     db.session.commit()
     flash("game bought successfully", "success")
     return redirect(url_for("home"))
@@ -93,16 +106,15 @@ def buy_game():
 @app.route("/my_games", methods=['GET', 'POST'])
 def my_games():
     if current_user.is_authenticated:
-        serch = SearchForm()
+        search = SearchForm()
         if request.method == 'POST':
-            games = serch_games_downloaded(serch.search_bar.data, current_user)
+            games = search_games_downloaded(search.search_bar.data, current_user)
         else:
-            games = games = serch_games_downloaded("", current_user)
+            games = search_games_downloaded("", current_user)
 
-        # games = GameDownload.query.filter_by(user_id=current_user.id)
         table = MyGamesTable(games)
 
-        return render_template("search.html", form=serch, table=table)
+        return render_template("my_games.html", form=search, table=table)
 
     else:
         flash("you have to login", "danger")
@@ -110,9 +122,9 @@ def my_games():
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
-    form = UploadForm(csrf_enabled=False)
+    form = UploadForm()
     print request.method
-    if request.method == 'POST':
+    if request.method == 'POST':  # and form.validate_on_submit():
         # check if the post request has the file part
         if 'game_file' not in request.files:
             flash('No file part')
@@ -123,8 +135,29 @@ def upload():
         if file.filename == '':
             flash('No selected file')
         # check file
-
-        upload_game(file, form, current_user)
-        flash("Sucsess")
+        print "trying"
+        if upload_game(file, form, current_user):
+            flash("Sucsess")
 
     return render_template("upload.html", form=form)
+
+
+@app.route("/gamePage:<int:gameId>")
+def game_page(gameId):
+    # if game is user's give more buttons
+    games = Game.query.filter_by(id=gameId).all()
+    if len(games) > 0:
+
+        return render_template("game_page.html", game=games[0])
+    else:
+        return "no game founde"
+
+
+@app.route("/my_uploads")
+def my_uploads():
+    pass
+
+
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    pass

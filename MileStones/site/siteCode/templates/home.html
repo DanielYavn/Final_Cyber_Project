@@ -1,15 +1,32 @@
 {%extends "layout.html" %}
 {%block content%}
-<h1> This Is My Home Page</h1>
-<a href="{{url_for('register')}}">register</a></br>
-<a href="{{url_for('login')}}">login</a>
-<a href="{{url_for('logout')}}">logout</a></br>
-<a href="{{url_for('my_games')}}">games</a></br>
-<a href="{{url_for('upload')}}">upload</a>
+<h1> Home </h1>
 
+<a href="{{url_for('game_page',gameId=1)}}">basic game Page</a>
 
 <h2>our games</h2>
-{{all_games_table}}
+<div>
+    <form method="POST" action="">
+        {{form.hidden_tag()}}
+        <fieldset>
+            <div>
+                {%if form.search_bar.errors %}
+                <div>
+                    {% for error in form.search_bar.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
 
+                {%else%}
+                {{form.search_bar(class="form-control form-control-lg")}}
+                {% endif %}
+
+                {{form.submit()}}
+            </div>
+        </fieldset>
+    </form>
+
+{{all_games_table}}
+</div>
 
 {%endblock content%}

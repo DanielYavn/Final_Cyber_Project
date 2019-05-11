@@ -33,10 +33,6 @@ def encrypt(path):
 
 
 def no_encryption(path):  # not encrypting
-    choice = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    key = ''.join(random.choice(choice) for m in xrange(32))
-    iv = ''.join(random.choice(choice) for m in xrange(16))
-
     epath = os.path.abspath("./siteCode/egames/" + "e" + os.path.split(path)[-1])
 
     with open(path, "rb") as inf:
@@ -49,4 +45,4 @@ def no_encryption(path):  # not encrypting
         with file(epath, "wb") as outf:
             outf.write(enc_cipher)
 
-    return {"key": unicode(key), "iv": unicode(iv), "encrypted_code_path": epath}
+    return {"key": unicode(0), "iv": unicode(0), "encrypted_code_path": epath}

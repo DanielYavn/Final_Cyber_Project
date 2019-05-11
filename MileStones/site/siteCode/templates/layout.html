@@ -1,19 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Game Blocker</title>
-</head>
-<body>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul class=flashes>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-{% block content %}{% endblock %}
-</body>
+    <head>
+    <!--
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    -->
+
+        <meta charset="UTF-8">
+        <title>Game Blocker</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                {% if current_user.is_authenticated %}
+                    Hello {{current_user.username}}
+                    <a href="{{url_for('home')}}">home</a>
+                    <a href="{{url_for('my_games')}}">my_games</a>
+                    <a href="{{url_for('upload')}}">upload</a>
+                    <a href="{{url_for('logout')}}">logout</a>
+                {%else%}
+                    Hello Guest
+                    <a href="{{url_for('home')}}">home</a>
+                    <a href="{{url_for('register')}}">register</a>
+                    <a href="{{url_for('login')}}">login</a>
+                {% endif %}
+
+            </nav>
+        </header>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </body>
 </html>
