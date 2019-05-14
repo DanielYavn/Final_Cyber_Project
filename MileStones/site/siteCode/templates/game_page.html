@@ -6,7 +6,7 @@
 
        <h1>{{game.name}}</h1>
         <p>{{game.description}}</p>
-
+        <a href="{{url_for('download_game',gameId=game.id)}}">download it</a>
     </fieldset>
 
 </div>

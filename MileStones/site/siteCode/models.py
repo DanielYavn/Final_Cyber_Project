@@ -42,9 +42,7 @@ class Game(db.Model):
 
     trile_time = db.Column(db.Integer, default=free_secounds)  # in secounds
 
-    # categort
     rating = db.Column(db.Integer, default=None)
-    # pictuer
 
     uploader = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     games_downloaded = db.relationship('GameDownload', backref="game")  # lazy=True
@@ -71,13 +69,46 @@ class GameDownload(db.Model):
         return "GameDownload({0},{1},{2})".format(self.id, self.date, self.user_id)
 
 
-def search_games_downloaded(search, user):
+def search_games_downloaded(search, user, page, per_page=20):
     if not search:
-        return GameDownload.query.filter_by(user_id=user.id).all()
-    return GameDownload.query.filter_by(user_id=user.id).join(Game).filter(Game.name.ilike("%{}%".format(search))).all()
+        games = GameDownload.query.filter_by(user_id=user.id)
+    else:
+        games = GameDownload.query.filter_by(user_id=user.id).join(Game).filter(Game.name.ilike("%{}%".format(search)))
+    games = games.group_by(GameDownload.game_id)
+    n = games.count()
+    max_page = int(n / per_page) + (n % per_page > 0)
+    if max_page == 0:
+        max_page = 1
+    if max_page < page:
+        page = max_page
+    return games.paginate(page=page, per_page=per_page)
 
 
-def search_games(search):
+def search_games(search, page, per_page=20):
     if not search:
-        return Game.query.all()
-    return Game.query.filter(Game.name.ilike("%{}%".format(search))).all()
+        games = Game.query
+    else:
+        games = Game.query.filter(Game.name.ilike("%{}%".format(search)))
+    n = games.count()
+    max_page = int(n / per_page) + (n % per_page > 0)
+    if max_page == 0:
+        max_page = 1
+    if max_page < page:
+        page = max_page
+
+    return games.paginate(page=page, per_page=per_page)
+
+
+def search_uploaded_games(search, user, page, per_page=20):
+    if not search:
+        games = Game.query.filter_by(uploader=user.id)
+    else:
+        games = Game.query.filter_by(uploader=user.id).filter(Game.name.ilike("%{}%".format(search)))
+    n = games.count()
+    max_page = int(n / per_page) + (n % per_page > 0)
+    if max_page == 0:
+        max_page = 1
+    if max_page < page:
+        page = max_page
+
+    return games.paginate(page=page, per_page=per_page)

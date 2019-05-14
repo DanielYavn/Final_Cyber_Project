@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, send_file
 from forms import RegistrationFrom, LoginFrom, SearchForm, UploadForm  # , GameForm
 from tables import MyGamesTable, AllGamesTable
 from uploads import upload_game
-from models import Game, User, GameDownload, search_games_downloaded, search_games
+from models import Game, User, GameDownload, search_games_downloaded, search_games, search_uploaded_games
 from siteCode import app, bcrypt, db, blocker_prep
 from flask_login import login_user, logout_user, current_user, login_required
 from datetime import datetime
@@ -12,14 +12,19 @@ from sqlalchemy import update
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+    page = request.args.get('page', 1, type=int)
+    prev_search = request.args.get('prev_search', "", type=str)
     search = SearchForm()
-    if request.method == 'POST':
-        games = search_games(search.search_bar.data)
-    else:
-        games = search_games("")
 
-    table = AllGamesTable(games)
-    return render_template("home.html", form=search, all_games_table=table)
+    if request.method == 'POST':
+        return redirect(url_for('home', page=page, prev_search=search.search_bar.data))
+
+    if prev_search:
+        search.search_bar.data = prev_search
+        games = search_games(prev_search, page)
+    else:
+        games = search_games("", page)
+    return render_template("home.html", form=search, games=games)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -105,16 +110,19 @@ def buy_game(gameId):
 
 @app.route("/my_games", methods=['GET', 'POST'])
 def my_games():
+    page = request.args.get('page', 1, type=int)
+    prev_search = request.args.get('prev_search', "", type=str)
     if current_user.is_authenticated:
         search = SearchForm()
         if request.method == 'POST':
-            games = search_games_downloaded(search.search_bar.data, current_user)
+            return redirect(url_for('my_games', page=page, prev_search=search.search_bar.data))
+        if prev_search:
+            search.search_bar.data = prev_search
+            games = search_games_downloaded(prev_search, user=current_user, page=page)
         else:
-            games = search_games_downloaded("", current_user)
+            games = search_games_downloaded("", user=current_user, page=page)
 
-        table = MyGamesTable(games)
-
-        return render_template("my_games.html", form=search, table=table)
+        return render_template("my_games.html", form=search, games=games, utcnow=datetime.utcnow())
 
     else:
         flash("you have to login", "danger")
@@ -123,8 +131,8 @@ def my_games():
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
     form = UploadForm()
-    print request.method
     if request.method == 'POST':  # and form.validate_on_submit():
+        print 1
         # check if the post request has the file part
         if 'game_file' not in request.files:
             flash('No file part')
@@ -137,7 +145,8 @@ def upload():
         # check file
         print "trying"
         if upload_game(file, form, current_user):
-            flash("Sucsess")
+            flash("uploaded Successfully", "success")
+            return redirect(url_for("home"))
 
     return render_template("upload.html", form=form)
 
@@ -150,12 +159,40 @@ def game_page(gameId):
 
         return render_template("game_page.html", game=games[0])
     else:
-        return "no game founde"
+        return "no game found"
 
 
 @app.route("/my_uploads")
 def my_uploads():
-    pass
+    if current_user.is_authenticated:
+        page = request.args.get('page', 1, type=int)
+        prev_search = request.args.get('prev_search', "", type=str)
+
+        search = SearchForm()
+        if request.method == 'POST':
+            return redirect(url_for('my_uploads', page=page, prev_search=search.search_bar.data))
+        if prev_search:
+            search.search_bar.data = prev_search
+            games = search_uploaded_games(prev_search, current_user, page)
+        else:
+            games = search_uploaded_games("", current_user, page)
+        return render_template("my_uploads.html", form=search, games=games)
+    return "you must login"
+
+
+@app.route("/remove_game/<int:gameId>")
+def remove_game(gameId):
+    if current_user.is_authenticated:
+        game = Game.query.filter_by(id=gameId).first()
+        uploader = game.uploader
+        if current_user.id == uploader:
+            # Game.query.filter_by(id=gameId).delete()
+            flash("removed Successfully", "success")
+        else:
+            flash("you have to be the uploader of the game", "danger")
+    else:
+        flash("you have to login", "danger")
+    return redirect("my_uploads")
 
 
 @app.route("/profile", methods=["GET", "POST"])

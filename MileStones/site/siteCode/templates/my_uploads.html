@@ -1,7 +1,7 @@
 {%extends "layout.html" %}
 {%block content%}
 
-<h2>our games</h2>
+<h2>your games</h2>
 <div>
     <form method="POST" action="">
         {{form.hidden_tag()}}
@@ -26,7 +26,7 @@
                 {{game.upload_date}}
                 <p> {{game.description}}</p>
 
-                <a href="{{url_for('game_page',gameId=game.id)}}">read more</a>
+                <a href="{{url_for('remove_game',gameId=game.id)}}">remove(not active yet)</a>
             </article>
         {%else%}
         no items found
@@ -34,10 +34,10 @@
         {% for page_num in games.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if page_num %}
                 {% if games.page == page_num %}
-                    <a href="{{ url_for('home', page=page_num, prev_search=form.search_bar.data) }}">{{ page_num }}</a>
+                    <a href="{{ url_for('my_uploads', page=page_num, prev_search=form.search_bar.data) }}">{{ page_num }}</a>
                 {% else %}
                     <!-- different style-->
-                    <a href="{{ url_for('home', page=page_num,prev_search=form.search_bar.data) }}">{{ page_num }}</a>
+                    <a href="{{ url_for('my_uploads', page=page_num,prev_search=form.search_bar.data) }}">{{ page_num }}</a>
                 {% endif %}
             {% else %}
                 ...

@@ -4,23 +4,53 @@
 <div>
     <form method="POST" action="">
         {{form.hidden_tag()}}
-        <fieldset>
+        <div>
+            {%if form.search_bar.errors %}
             <div>
-                {%if form.search_bar.errors %}
-                <div>
-                    {% for error in form.search_bar.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                {%else%}
-                {{form.search_bar(class="form-control form-control-lg")}}
-                {% endif %}
-
-                {{form.submit()}}
+                {% for error in form.search_bar.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
             </div>
-        </fieldset>
+            {%else%}
+                {{form.search_bar(class="form-control form-control-lg")}}
+            {% endif %}
+            {{form.submit()}}
+        </div>
     </form>
+
+    <section>
+        {% for game in games.items %}
+            <article>
+                <h2> {{game.game.name}}</h2>
+                <h4> {{game.game.user.username}}</h4>
+                {%if  game.date%} <!-- game is not bought-->
+                    {%if  utcnow < game.date%}
+                        <p>status: Trial period until {{game.date}} </p>
+                    {%else%}
+                         <p>status: Trial period expired </p>
+                    {%endif%}
+                    <p>cost:{{game.game.cost}} &#x20AA;</p>
+                    <a href="{{url_for('buy_game',gameId=game.id)}}">Buy the game</a>
+                {%else%}
+                    <p>status: The game is bought </p>
+                {%endif%}
+            </article>
+        {%else%}
+        no items found
+        {% endfor %}
+        {% for page_num in games.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if games.page == page_num %}
+                    <a href="{{ url_for('my_games', page=page_num, prev_search=form.search_bar.data) }}">{{ page_num }}</a>
+                {% else %}
+                    <!-- different style-->
+                    <a href="{{ url_for('my_games', page=page_num,prev_search=form.search_bar.data) }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+    </section>
 </div>
-{{table}}
+
 {%endblock content%}
