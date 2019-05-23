@@ -16,17 +16,29 @@
             </div>
         </div>
     </form>
-    <section class="has-text-centered">
+    <section class="">
         {% for game in games.items %}
-            <article class="box">
-                <span class="title is-3"> {{game.name}}</span>&nbsp;
-                <strong class="title is-5"> {{game.user.username}}</strong></br>
-                <span>{{game.upload_date.strftime("%d-%m-%Y")}}</span>
-                <p style="white-space: pre">{{game.description}}</p>
-                <a href="{{url_for('game_page',gameId=game.id)}}" class="button is-link right-aligned">read more</a>
+            <article class="box parent grid-parent">
+                <div class="child">
+                    <div class="has-text-centered" style="position: relative;">
+                        <span class="title is-3 ">{{game.name}}</span>&nbsp;
+                         <strong class="title is-5">{{game.user.username}}</strong>
+                    </div>
+
+                    <span>{{game.upload_date.strftime("%d-%m-%Y")}}</span>
+
+                    <p style="white-space: pre">{{game.description}}</p>
+                    <a href="{{url_for('game_page',gameId=game.id)}}" class="button is-link right-aligned" style="position: absolute;">read more</a>
+                </div>
+                <div class="child image is-3by2">
+                    <img class="rounded" src="{{url_for('static',filename=game.image)}}">
+                </div>
             </article>
         {%else%}
-        no items found
+        <div>
+            <p class="field has-addons">no items found</p>
+        </div>
+
         {% endfor %}
     </section>
     <section class="field has-text-centered">

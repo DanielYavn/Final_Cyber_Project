@@ -17,7 +17,6 @@ def trile_end_time(self):
         if game_downloaded.game is current_game:
             return game_downloaded.date
 
-
     trile_time = current_game.trile_time
     return datetime.utcnow() + timedelta(seconds=trile_time)
 
@@ -52,6 +51,8 @@ class Game(db.Model):
     removed = db.Column(db.Boolean, default=False)
 
     downloads = db.Column(db.Integer, default=0)
+
+    image = db.Column(db.String(50),nullable=False)
 
     def __repr__(self):
         return "Game(id:{0}, name4:{1}, cost:{2}, removed:{3})".format(self.id, self.name, self.cost, self.removed)

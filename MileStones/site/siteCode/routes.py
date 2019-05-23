@@ -135,13 +135,26 @@ def upload():
     form = forms.UploadForm()
     if request.method == 'POST':  # and form.validate_on_submit():
         if 'game_file' not in request.files:
-            flash('No file part', "is-danger")
+            flash('you did not upload the game', "is-danger")
             return redirect(request.url)
-        file = request.files['game_file']
+        if 'img_file' not in request.files:
+            flash('you did not upload the image', "is-danger")
+            return redirect(request.url)
+        game_file = request.files['game_file']
+        image = request.files['img_file']
 
-        if file.filename == '':
-            flash('No selected file', "is-danger")
-        if upload_game(file, form, current_user):
+        if game_file.filename == '':
+            flash('you did not upload the game', "is-danger")
+            return redirect(request.url)
+        if image.filename == '':
+            flash('you did not upload the image', "is-danger")
+            return redirect(request.url)
+        if not image.filename.split(".")[-1]=="png":
+            flash('image has to be .png type', "is-danger")
+            return redirect(request.url)
+        print form.img_file.data
+
+        if upload_game(game_file, form, current_user):
             flash("uploaded Successfully", "is-success")
             return redirect(url_for("home"))
 
@@ -239,14 +252,13 @@ def update_game(gameId):
             if request.method == "GET":
                 form.fill_form()
                 return render_template("update.html", form=form)
-
+            file = None
             if request.method == "POST":
                 if 'game_file' in request.files:
                     file = request.files['game_file']
-                    if file.filename != '':
-                        if update_my_game(game, file, form):
-                            flash("uploaded Successfully", "is-success")
-                            return redirect(url_for("uploaded_games"))
-            update_my_game(game, None, form)
+                    if file.filename == '':
+                        file = None
+
+            update_my_game(game, file, form)
             return redirect(url_for("my_uploads"))
     return redirect(url_for("home", gameId=gameId))

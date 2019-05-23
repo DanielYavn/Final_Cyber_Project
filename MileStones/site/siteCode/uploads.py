@@ -1,26 +1,42 @@
 from models import Game
 from siteCode import db
 import os
+from PIL import Image
 
 games_folder = "./siteCode/games/"
+img_folder = "./siteCode/static/games_img/"
 
 
-def upload_game(file, form, user):
-    print "uploading"
+def upload_game(game_file, form, user):
     args = {}
+
     if len(form.price.data) > 0:
         args['cost'] = float(form.price.data)
     if not (form.days.data is None and form.hours.data is None and form.minutes.data is None):
         args["trile_time"] = trile_time_sec(form.days.data, form.hours.data, form.minutes.data)
-    game = Game(name=form.name.data, description=form.description.data, uploader=user.id, **args)
+    game = Game(name=form.name.data, description=form.description.data, uploader=user.id, image="unknown", **args)
 
     user.games_uploaded.append(game)
     db.session.commit()
-
     game_id = game.id
+    image_path = os.path.join(img_folder, str(game_id) + ".png")
+    game_path = os.path.join(games_folder, str(game_id) + ".exe")
+    
 
-    file.save(os.path.join(games_folder, str(game_id) + ".exe"))
+    game.image = "games_img/"+str(game_id) + ".png"
+    db.session.commit()
+
+    game_file.save(game_path)
+    save_resized_image(form.img_file.data,image_path)
+
     return True
+
+
+def save_resized_image(form_img, path):
+    output_size = (125, 125)
+    i = Image.open(form_img)
+    i.thumbnail(output_size)
+    i.save(path)
 
 
 def check_game(game_file):
@@ -54,4 +70,3 @@ def update_my_game(game, file, form):
     if not file is None:
         file.save(os.path.join(games_folder, str(game_id) + ".exe"))
     return True
-

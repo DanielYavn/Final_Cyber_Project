@@ -6,3 +6,4 @@ flask-login
 flask_table
 pycrypto
 pkcs7
+Pillow

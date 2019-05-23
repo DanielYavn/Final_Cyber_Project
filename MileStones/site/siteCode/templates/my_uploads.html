@@ -3,7 +3,7 @@
 
 
 <div>
-    <h2 class="title h-1" align="center">your games</h2>
+    <h2 class="title h-1" align="center">Games You Uploaded</h2>
     <form method="POST" action="">
         {{form.hidden_tag()}}
 
@@ -28,17 +28,22 @@
                 <span><p>game was downloaded {{game.downloads}} times</p></span>
                 <p style="white-space: pre">{{game.description}}</p>
                 {%if game.removed%}
-                <strong>you removed this game</strong><br>
+                    <strong>you removed this game</strong><br>
+                {%endif%}
+                 <div class="buttons has-addons is-right">
+                {%if game.removed%}
                     <a href="{{url_for('unremove_game',gameId=game.id)}}" class="button is-link">undo removal</a>
                 {%else%}
                     <a href="{{url_for('remove_game',gameId=game.id)}}" class="button is-link">remove</a>
                 {%endif%}
 
                 <a href="{{url_for('update_game',gameId=game.id)}}" class="button is-link">Update game details</a>
-
+                </div>
             </article>
         {%else%}
-            no items found
+            <div>
+                <p class="field has-addons">no items found</p>
+            </div>
         {% endfor %}
     </section>
 </div>

@@ -1,7 +1,7 @@
 {%extends "layout.html"%}
 {%block content%}
 <div>
-    <h1 class="title h-1"  align="center"> My Games</h1>
+    <h1 class="title h-1"  align="center">Games You Downloaded</h1>
 
     <form method="POST" action="">
         {{form.hidden_tag()}}
@@ -29,13 +29,16 @@
                         <p>status: Trial period expired </p>
                     {%endif%}
                          <p>cost:{{game.game.cost}} &#x20AA;</p>
-                        <a href="{{url_for('buy_game',gameId=game.id)}} " class="button is-link right-aligned">Buy the game</a>
+                        <a href="{{url_for('buy_game',gameId=game.id)}} " class="button is-link right-aligned" style="position: absolute;">Buy the game</a>
+
                 {%else%}
                     <p>status: The game is bought </p>
                 {%endif%}
             </article>
         {%else%}
-        no items found
+        <div>
+            <p class="field has-addons">no items found</p>
+        </div>
         {% endfor %}
  </section>
 

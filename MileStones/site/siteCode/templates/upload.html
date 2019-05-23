@@ -27,11 +27,22 @@
                          {{form.game_file(class="file-input")}}
                             <span class="file-cta">
                                 <span class="file-label">
-                                    Choose you're game
+                                    Choose your game
                                 </span>
                             </span>
                     </label>
-                </div>
+               </div>
+               <br>
+               <div class="file has-name">
+                   <label class="file-label">
+                       {{form.img_file(class="file-input")}}
+                       <span class="file-cta">
+                           <span class="file-label">
+                               Choose game image
+                           </span>
+                       </span>
+                   </label>
+               </div>
             </div>
             <div>
                 {%if form.game_file.errors %}
@@ -54,6 +65,7 @@
 
             </div>
             <br>
+            <span>Choose the length of the trial period</span>
             <div class="field is-grouped is-grouped-left">
 
                  {{form.days(class="input")}}   {{form.hours(class="input")}}  {{form.minutes(class="input")}}

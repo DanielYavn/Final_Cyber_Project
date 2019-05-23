@@ -54,6 +54,7 @@ class UploadForm(FlaskForm):
 
     name = StringField("game name", render_kw={"placeholder": "Game Name"})  # , validators=[DataRequired()])
     game_file = FileField("your game")  # , validators=[DataRequired()])
+    img_file = FileField("image")
     description = TextAreaField("description", render_kw={"placeholder": "Please add a description"})
     days = IntegerField("days", render_kw={"placeholder": "days"})
     hours = IntegerField("hours", render_kw={"placeholder": "hours"})
@@ -65,7 +66,7 @@ class UploadForm(FlaskForm):
 
 class UpdateForm(UploadForm):
     def __init__(self, game):
-        self.game=game
+        self.game = game
         UploadForm.__init__(self)
 
     def fill_form(self):

@@ -19,3 +19,22 @@ html {
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
 }
+.grid-parent {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+}
+img.rounded{
+border-radius: 5px;
+}
+div,article{
+position:relative;
+}
+
+a.button{
+margin-right: 0.1rem;
+margin-left: 0.1rem;
+right:    1rem;
+bottom:   1rem;
+display: inline-block;
+}
+
