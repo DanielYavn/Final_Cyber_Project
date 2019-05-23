@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, send_file
-from forms import RegistrationFrom, LoginFrom, SearchForm, UploadForm  # , GameForm
+import forms
 from tables import MyGamesTable, AllGamesTable
-from uploads import upload_game
+from uploads import upload_game, update_my_game
 from models import Game, User, GameDownload, search_games_downloaded, search_games, search_uploaded_games
 from siteCode import app, bcrypt, db, blocker_prep
 from flask_login import login_user, logout_user, current_user, login_required
@@ -14,7 +14,7 @@ from sqlalchemy import update
 def home():
     page = request.args.get('page', 1, type=int)
     prev_search = request.args.get('prev_search', "", type=str)
-    search = SearchForm()
+    search = forms.SearchForm()
 
     if request.method == 'POST':
         return redirect(url_for('home', page=page, prev_search=search.search_bar.data))
@@ -29,14 +29,15 @@ def home():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    form = RegistrationFrom()
+    form = forms.RegistrationFrom()
     if form.validate_on_submit():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         new_user = User(username=form.username.data, email=form.email.data, password=hashed_pw)
         db.session.add(new_user)
         db.session.commit()
 
-        flash("created account for {0}".format(form.username.data), "success")
+        flash("created account for {0}".format(form.username.data), "is-success")
+        login_user(new_user)
         return redirect(url_for("home"))
     else:
         pass
@@ -45,15 +46,15 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    form = LoginFrom()
+    form = forms.LoginFrom()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            flash("logged in for {0}".format(form.email.data), "success")
+            flash("logged in for {0}".format(form.email.data), "is-success")
             return redirect(url_for("home"))
         else:
-            flash("log in for {0} was unsucsesfull".format(form.email.data), "danger")
+            flash("log in for {0} was unsucsesfull".format(form.email.data), "is-danger")
     return render_template("login.html", form=form)
 
 
@@ -73,7 +74,7 @@ def download_game(gameId):
         # return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
 
     else:
-        flash("you are not loggd in", "danger")
+        flash("you are not loggd in", "is-danger")
     return redirect(url_for("home"))
 
 
@@ -96,7 +97,7 @@ def run_permission(gameId):
 @app.route("/buy_game/<int:gameId>")
 def buy_game(gameId):
     if not current_user.is_authenticated:
-        flash("you are not loggd in", "danger")
+        flash("you are not loggd in", "is-danger")
         redirect(url_for("home"))
 
     game_type_id = GameDownload.query.filter_by(id=gameId).first().game_id
@@ -104,7 +105,7 @@ def buy_game(gameId):
         if game.game_id == game_type_id:
             game.date = None
     db.session.commit()
-    flash("game bought successfully", "success")
+    flash("game bought successfully", "is-success")
     return redirect(url_for("home"))
 
 
@@ -113,7 +114,7 @@ def my_games():
     page = request.args.get('page', 1, type=int)
     prev_search = request.args.get('prev_search', "", type=str)
     if current_user.is_authenticated:
-        search = SearchForm()
+        search = forms.SearchForm()
         if request.method == 'POST':
             return redirect(url_for('my_games', page=page, prev_search=search.search_bar.data))
         if prev_search:
@@ -125,30 +126,41 @@ def my_games():
         return render_template("my_games.html", form=search, games=games, utcnow=datetime.utcnow())
 
     else:
-        flash("you have to login", "danger")
+        flash("you have to login", "is-danger")
+        return redirect(url_for("home"))
 
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
-    form = UploadForm()
+    form = forms.UploadForm()
     if request.method == 'POST':  # and form.validate_on_submit():
-        print 1
-        # check if the post request has the file part
         if 'game_file' not in request.files:
-            flash('No file part')
+            flash('No file part', "is-danger")
             return redirect(request.url)
         file = request.files['game_file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
+
         if file.filename == '':
-            flash('No selected file')
-        # check file
-        print "trying"
+            flash('No selected file', "is-danger")
         if upload_game(file, form, current_user):
-            flash("uploaded Successfully", "success")
+            flash("uploaded Successfully", "is-success")
             return redirect(url_for("home"))
 
     return render_template("upload.html", form=form)
+
+
+@app.route("/download_check_game/<int:gameId>")
+def download_check_game(gameId):
+    if current_user.is_authenticated:
+        game = Game.queue.get(gameId)
+        if current_user.id == game.uploader.id:
+            ready_blocker, gamename = blocker_prep.create_new_blocker_no_enc(current_user, gameId)
+            # ready_blocker=blocker_prep.create_new_blocker_no_enc(current_user,game_id)
+
+            return download_and_remove(ready_blocker, gamename + ".exe")
+            # return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
+    else:
+        flash("you are not loggd in", "is-danger")
+    return redirect(url_for("home"))
 
 
 @app.route("/gamePage:<int:gameId>")
@@ -168,7 +180,7 @@ def my_uploads():
         page = request.args.get('page', 1, type=int)
         prev_search = request.args.get('prev_search', "", type=str)
 
-        search = SearchForm()
+        search = forms.SearchForm()
         if request.method == 'POST':
             return redirect(url_for('my_uploads', page=page, prev_search=search.search_bar.data))
         if prev_search:
@@ -182,19 +194,59 @@ def my_uploads():
 
 @app.route("/remove_game/<int:gameId>")
 def remove_game(gameId):
+    print "remove"
     if current_user.is_authenticated:
         game = Game.query.filter_by(id=gameId).first()
         uploader = game.uploader
         if current_user.id == uploader:
-            # Game.query.filter_by(id=gameId).delete()
-            flash("removed Successfully", "success")
+            game.removed = True
+            db.session.commit()
+            flash("removed Successfully", "is-success")
         else:
-            flash("you have to be the uploader of the game", "danger")
+            flash("you have to be the uploader of the game", "is-danger")
     else:
-        flash("you have to login", "danger")
+        flash("you have to login", "is-danger")
+
     return redirect("my_uploads")
 
 
-@app.route("/profile", methods=["GET", "POST"])
-def profile():
-    pass
+@app.route("/unremove_game/<int:gameId>")
+def unremove_game(gameId):
+    print "undo"
+    if current_user.is_authenticated:
+        game = Game.query.get(gameId)
+        uploader = game.uploader
+        if current_user.id == uploader:
+            game.removed = False
+            db.session.commit()
+            flash("returned Successfully", "is-success")
+        else:
+            flash("you have to be the uploader of the game", "is-danger")
+    else:
+        flash("you have to login", "is-danger")
+
+    return redirect("my_uploads")
+
+
+@app.route("/update_game/<int:gameId>", methods=["GET", "POST"])
+def update_game(gameId):
+    if current_user.is_authenticated:
+
+        game = Game.query.get(gameId)
+        uploader = game.uploader
+        if current_user.id == uploader:
+            form = forms.UpdateForm(game)
+            if request.method == "GET":
+                form.fill_form()
+                return render_template("update.html", form=form)
+
+            if request.method == "POST":
+                if 'game_file' in request.files:
+                    file = request.files['game_file']
+                    if file.filename != '':
+                        if update_my_game(game, file, form):
+                            flash("uploaded Successfully", "is-success")
+                            return redirect(url_for("uploaded_games"))
+            update_my_game(game, None, form)
+            return redirect(url_for("my_uploads"))
+    return redirect(url_for("home", gameId=gameId))

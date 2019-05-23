@@ -7,12 +7,12 @@ games_folder = "./siteCode/games/"
 
 def upload_game(file, form, user):
     print "uploading"
-    if form.days.data is None and form.hours.data is None and form.minutes.data is None:
-        game = Game(name=form.name.data, description=form.description.data, uploader=user.id, cost=form.price.data)
-    else:
-        trile_time = trile_time_sec(form.days.data, form.hours.data, form.minutes.data)
-        game = Game(name=form.name.data, description=form.description.data, uploader=user.id, trile_time=trile_time,
-                    cost=form.price.data)
+    args = {}
+    if len(form.price.data) > 0:
+        args['cost'] = float(form.price.data)
+    if not (form.days.data is None and form.hours.data is None and form.minutes.data is None):
+        args["trile_time"] = trile_time_sec(form.days.data, form.hours.data, form.minutes.data)
+    game = Game(name=form.name.data, description=form.description.data, uploader=user.id, **args)
 
     user.games_uploaded.append(game)
     db.session.commit()
@@ -37,3 +37,21 @@ def trile_time_sec(d=0, h=0, m=0):
     m += h * 60
     sec = m * 60
     return sec
+
+
+def update_my_game(game, file, form):
+    if form.price.data > 0:
+        game.cost = float(form.price.data)
+    if not (form.days.data is None and form.hours.data is None and form.minutes.data is None):
+        game.trile_time = trile_time_sec(form.days.data, form.hours.data, form.minutes.data)
+
+    game.name = form.name.data
+    game.description = form.description.data
+    db.session.commit()
+
+    game_id = game.id
+
+    if not file is None:
+        file.save(os.path.join(games_folder, str(game_id) + ".exe"))
+    return True
+

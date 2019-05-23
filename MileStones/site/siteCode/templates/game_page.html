@@ -1,12 +1,15 @@
 {%extends "layout.html" %}
 {%block content%}
-<div>
-
+<div class="box">
     <fieldset>
 
-       <h1>{{game.name}}</h1>
-        <p>{{game.description}}</p>
-        <a href="{{url_for('download_game',gameId=game.id)}}">download it</a>
+        <h1 class="title h-1">{{game.name}}</h1>
+        <strong class="title is-5"> {{game.user.username}}</strong></br>
+        <span>{{game.upload_date.strftime("%d-%m-%Y")}}</span>
+        <p style="white-space: pre">{{game.description}}</p>
+        <div>
+            <a href="{{url_for('download_game',gameId=game.id)}}" class="button is-link submit">download it</a>
+        </div>
     </fieldset>
 
 </div>

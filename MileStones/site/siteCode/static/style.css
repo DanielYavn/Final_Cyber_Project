@@ -1,0 +1,21 @@
+html {
+    background-color: lightgray;
+}
+.box, .field.has-addons {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    }
+.submit{
+    float: right;
+    margin-top:0.5rem
+}
+.small-center{
+    max-width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}

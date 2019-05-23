@@ -62,9 +62,12 @@ def create_new_blocker(user, game_id):
     game = models.GameDownload(Crypto_key=e_dict["key"], Crypto_iv=e_dict["iv"], user_id=user.id, game_id=game_id)
     user.games_downloaded.append(game)
     db.session.flush()  # needed?
-    game_name = models.Game.query.filter_by(id=game_id).first().name
     # create id fie
     id_path = create_id_file(game.id)
+
+    game_type = models.Game.query.filter_by(id=game_id).first()
+
+    game_type.downloads = game_type.downloads + 1
 
     db.session.commit()  # ^
 
@@ -83,21 +86,15 @@ def create_new_blocker(user, game_id):
 
 def create_new_blocker_no_enc(user, game_id):
     games_dir = "./siteCode/games/"
-    game_path = os.path.abspath(games_dir + str(game_id) + ".exe")
-    ready_blocker = os.path.abspath(r".\siteCode\ready_blockers\\" + str(user.id) + str(game_id) + ".exe")
+    game_path = os.path.abspath(games_dir + str(game_id) + "noEnc.exe")
+    ready_blocker = os.path.abspath(r".\siteCode\ready_blockers\\" + str(user.id) + str(game_id) + "noEnc.exe")
     # G:\cyber\Final_Cyber_Project\MileStones\Site\siteCode\ready_blockers
     # encrypt file
     e_dict = crypto.no_encryption(game_path)
 
-    # create GameDownloaded
-    game = models.GameDownload(Crypto_key=e_dict["key"], Crypto_iv=e_dict["iv"], user_id=user.id)
-    user.games_downloaded.append(game)
-    db.session.flush()  # needed?
-
     # create id fie
-    id_path = create_id_file(game.id)
+    id_path = create_id_file("-1")
 
-    db.session.commit()  # ^
 
     # compile
     compile_blocker(ready_blocker, e_dict["encrypted_code_path"], id_path)

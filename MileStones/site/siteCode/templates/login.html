@@ -1,14 +1,15 @@
 {%extends "layout.html"%}
 {%block content%}
-<h1> Login</h1>
-<div>
+<div class="box small-center">
+    <h1 class="title h-1"> Login</h1>
+
     <form method="POST" action="">
         {{form.hidden_tag()}}
         <fieldset>
                 <div>
                     {{form.email.label()}}
                     {%if form.email.errors %}
-                        {{form.email(class="form-control form-control-lg is-invalid")}}
+                        {{form.email(class="input is-danger")}}
                         <div>
                             {% for error in form.email.errors %}
                                 <span>{{ error }}</span>
@@ -16,13 +17,13 @@
                         </div>
 
                     {%else%}
-                        {{form.email(class="form-control form-control-lg")}}
+                        {{form.email(class="input")}}
                     {% endif %}
                 </div>
                 <div>
                     {{form.password.label()}}
-                                        {%if form.password.errors %}
-                        {{form.password(class="form-control form-control-lg is-invalid")}}
+                    {%if form.password.errors %}
+                        {{form.password(class="input is-invalid")}}
                         <div>
                             {% for error in form.password.errors %}
                                 <span>{{ error }}</span>
@@ -30,7 +31,7 @@
                         </div>
 
                     {%else%}
-                        {{form.password(class="form-control form-control-lg")}}
+                        {{form.password(class="input")}}
                     {% endif %}
                 </div>
             <div>
@@ -38,11 +39,11 @@
                     {{form.remember()}}
                 </div>
 
-        </fieldset>
-        <div>
-            {{form.submit()}}
-        </div>
 
+        <div>
+            {{form.submit(class="button is-info submit")}}
+        </div>
+    </fieldset>
     </form>
 </div>
 {%endblock content%}

@@ -1,36 +1,35 @@
 {%extends "layout.html"%}
 {%block content%}
-<h1> My Games</h1>
 <div>
+    <h1 class="title h-1"  align="center"> My Games</h1>
+
     <form method="POST" action="">
         {{form.hidden_tag()}}
-        <div>
-            {%if form.search_bar.errors %}
-            <div>
-                {% for error in form.search_bar.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
+        <div class="">
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    {{form.search_bar(class="input is-info is-medium")}}
+                </div>
+                <div class="control">
+                    {{form.submit(class="button is-info is-medium")}}
+                </div>
             </div>
-            {%else%}
-                {{form.search_bar(class="form-control form-control-lg")}}
-            {% endif %}
-            {{form.submit()}}
         </div>
-    </form>
 
-    <section>
+    </form>
+ <section class="">
         {% for game in games.items %}
-            <article>
-                <h2> {{game.game.name}}</h2>
-                <h4> {{game.game.user.username}}</h4>
+            <article class="box">
+                <span class="title is-3"> {{game.game.name}}</span>&nbsp;
+                <strong class="title is-5"> {{game.game.user.username}}</strong></br>
                 {%if  game.date%} <!-- game is not bought-->
                     {%if  utcnow < game.date%}
                         <p>status: Trial period until {{game.date}} </p>
                     {%else%}
-                         <p>status: Trial period expired </p>
+                        <p>status: Trial period expired </p>
                     {%endif%}
-                    <p>cost:{{game.game.cost}} &#x20AA;</p>
-                    <a href="{{url_for('buy_game',gameId=game.id)}}">Buy the game</a>
+                         <p>cost:{{game.game.cost}} &#x20AA;</p>
+                        <a href="{{url_for('buy_game',gameId=game.id)}} " class="button is-link right-aligned">Buy the game</a>
                 {%else%}
                     <p>status: The game is bought </p>
                 {%endif%}
@@ -38,19 +37,22 @@
         {%else%}
         no items found
         {% endfor %}
+ </section>
+
+</div>
+<section class="field has-text-centered">
+
         {% for page_num in games.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if page_num %}
                 {% if games.page == page_num %}
-                    <a href="{{ url_for('my_games', page=page_num, prev_search=form.search_bar.data) }}">{{ page_num }}</a>
+                    <a href="{{ url_for('home', page=page_num, prev_search=form.search_bar.data) }}" class="button">{{ page_num }}</a>
                 {% else %}
                     <!-- different style-->
-                    <a href="{{ url_for('my_games', page=page_num,prev_search=form.search_bar.data) }}">{{ page_num }}</a>
+                    <a href="{{ url_for('home', page=page_num,prev_search=form.search_bar.data) }}" class="button">{{ page_num }}</a>
                 {% endif %}
             {% else %}
                 ...
             {% endif %}
         {% endfor %}
     </section>
-</div>
-
 {%endblock content%}

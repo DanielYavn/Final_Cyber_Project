@@ -1,49 +1,50 @@
 {%extends "layout.html" %}
 {%block content%}
-
-<h2>our games</h2>
+<br>
 <div>
     <form method="POST" action="">
         {{form.hidden_tag()}}
-        <div>
-            {%if form.search_bar.errors %}
-            <div>
-                {% for error in form.search_bar.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
+
+        <div class="">
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    {{form.search_bar(class="input is-info is-medium")}}
+                </div>
+                <div class="control">
+                    {{form.submit(class="button is-info is-medium")}}
+                </div>
             </div>
-            {%else%}
-                {{form.search_bar(class="form-control form-control-lg")}}
-            {% endif %}
-            {{form.submit()}}
         </div>
     </form>
-    <section>
+    <section class="has-text-centered">
         {% for game in games.items %}
-            <article>
-                <h2> {{game.name}}</h2>
-                <h4> {{game.user.username}}</h4>
-                {{game.upload_date}}
-                <p> {{game.description}}</p>
-
-                <a href="{{url_for('game_page',gameId=game.id)}}">read more</a>
+            <article class="box">
+                <span class="title is-3"> {{game.name}}</span>&nbsp;
+                <strong class="title is-5"> {{game.user.username}}</strong></br>
+                <span>{{game.upload_date.strftime("%d-%m-%Y")}}</span>
+                <p style="white-space: pre">{{game.description}}</p>
+                <a href="{{url_for('game_page',gameId=game.id)}}" class="button is-link right-aligned">read more</a>
             </article>
         {%else%}
         no items found
         {% endfor %}
+    </section>
+    <section class="field has-text-centered">
+
         {% for page_num in games.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if page_num %}
                 {% if games.page == page_num %}
-                    <a href="{{ url_for('home', page=page_num, prev_search=form.search_bar.data) }}">{{ page_num }}</a>
+                    <a href="{{ url_for('home', page=page_num, prev_search=form.search_bar.data) }}" class="button">{{ page_num }}</a>
                 {% else %}
                     <!-- different style-->
-                    <a href="{{ url_for('home', page=page_num,prev_search=form.search_bar.data) }}">{{ page_num }}</a>
+                    <a href="{{ url_for('home', page=page_num,prev_search=form.search_bar.data) }}" class="button">{{ page_num }}</a>
                 {% endif %}
             {% else %}
                 ...
             {% endif %}
         {% endfor %}
     </section>
+
 </div>
 
 {%endblock content%}

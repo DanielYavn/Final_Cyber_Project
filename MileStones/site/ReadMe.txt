@@ -1,4 +1,4 @@
-
+https://bulmatemplates.github.io/bulma-templates/
 to do:
 
 add:
@@ -9,7 +9,6 @@ add:
 -change details
 -fix blocker console game, forms
 -stealing demonstration
--detete user or games, control over your uploads
 -get statistics
 -remove tables
 

@@ -29,7 +29,7 @@ class LoginFrom(FlaskForm):
 
 
 class SearchForm(FlaskForm):
-    search_bar = StringField('search')
+    search_bar = StringField('search', render_kw={"placeholder": "Search here"})
     submit = SubmitField('Search')
 
 
@@ -52,17 +52,34 @@ class UploadForm(FlaskForm):
                 print "err"
                 raise ValidationError("has to be a positive float")
 
-    def to_float(x):
-        print "-",x
-        if x is None:
-            return x
-        return float(x)
+    name = StringField("game name", render_kw={"placeholder": "Game Name"})  # , validators=[DataRequired()])
+    game_file = FileField("your game")  # , validators=[DataRequired()])
+    description = TextAreaField("description", render_kw={"placeholder": "Please add a description"})
+    days = IntegerField("days", render_kw={"placeholder": "days"})
+    hours = IntegerField("hours", render_kw={"placeholder": "hours"})
+    minutes = IntegerField("minutes", render_kw={"placeholder": "minutes"})
+    price = StringField("price", render_kw={"placeholder": "Price"})  # , validators=[validate_price], )
 
-    name = StringField("game name")#, validators=[DataRequired()])
-    game_file = FileField("your game")#, validators=[DataRequired()])
     upload = SubmitField("upload")
-    description = TextAreaField("description")
-    days = IntegerField("days")
-    hours = IntegerField("hours")
-    minutes = IntegerField("minutes")
-    price = StringField("price",filters=[to_float])#, validators=[validate_price], )
+
+
+class UpdateForm(UploadForm):
+    def __init__(self, game):
+        self.game=game
+        UploadForm.__init__(self)
+
+    def fill_form(self):
+        self.name.data = self.game.name
+        self.description.data = self.game.description
+        self.price.data = self.game.cost
+        self.days.data, self.hours.data, self.minutes.data = self.break_trile_time(self.game.trile_time)
+
+    def break_trile_time(self, t):
+        d = t // (24 * 60 * 60)
+        t %= (24 * 60 * 60)
+        h = t // (60 * 60)
+        t %= (60 * 60)
+        m = t // 60
+        return d, h, m
+
+    upload = SubmitField("Update")
