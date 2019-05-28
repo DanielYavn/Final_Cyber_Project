@@ -31,11 +31,11 @@ namespace decryptor
             }
             catch (AggregateException)
             {
-                server_down_MB();
+                Server_down_MB();
             }
             if (keyIv[0] == "")
             {
-                buy_game_MB();
+                Buy_game_MB();
             }
             else
             {
@@ -75,7 +75,7 @@ namespace decryptor
                 {
                     method.Invoke(o, new object[] { new string[0] });
                 }
-                //
+                
             }
         }
         static string ReadFromRescurces(string resName)
@@ -137,7 +137,7 @@ namespace decryptor
 
             return fixedDecBytes;
         }
-        public static void server_down_MB()
+        public static void Server_down_MB()
         {
             string message = "Could not run the game due to network error. Please check your internet connection and try again later.";
             string caption = "Connection Error";
@@ -148,7 +148,7 @@ namespace decryptor
             result = MessageBox.Show(message, caption, buttons);
             System.Environment.Exit(1);
         }
-        public static void buy_game_MB()
+        public static void Buy_game_MB()
         {
             string message = "Could not run the game because trial period expired. Please buy the game at our site and try again later.";
             string caption = "Trial Period Expired";

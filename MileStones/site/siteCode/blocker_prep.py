@@ -7,6 +7,13 @@ decryptor_no_enc_path = os.path.abspath(r"./siteCode/ready_blockers/decryptor_no
 
 
 def compile_blocker(blocker_path, e_game_path, id_path):
+    """
+    compiles new blocker
+    :param blocker_path: path fore new blocker
+    :param e_game_path: encrypted game file path
+    :param id_path: id file path
+    :return:
+    """
     if os.environ['COMPUTERNAME'] == 'DESKTOP-NDHRRRG':
         ces_path = r'"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Roslyn\csc.exe"'  # home
     else:
@@ -21,17 +28,7 @@ def compile_blocker(blocker_path, e_game_path, id_path):
               " /res:" + code_file + ",code,private  " + " /res:" + id_file + ",id,private " + \
               "/reference:System.Net.Http.dll /reference:System.Security.Cryptography.Primitives.dll /reference:System.Windows.Forms.dll " + \
               blocker_code_file
-    "/target:winexe " + \
-    """
-    home:
-    "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Roslyn\csc.exe"
-    school:
-    "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\Roslyn\csc.exe"
-    
-    
-    doxomintation:
-    https://docs.microsoft.com/en-us/previous-versions/ms379563(v=vs.80)
-    """
+                #"/target:winexe "
 
     try:
         x = subprocess.call(command, shell=False)
@@ -42,6 +39,11 @@ def compile_blocker(blocker_path, e_game_path, id_path):
 
 
 def create_id_file(id):
+    """
+    file with game id
+    :param id: game id
+    :return: path to file
+    """
     id_dir = "./siteCode/egames/"
     id_path = os.path.abspath(id_dir + "id_" + str(id))
     f = file(id_path, "wb")
@@ -51,6 +53,12 @@ def create_id_file(id):
 
 
 def create_new_blocker(user, game_id):
+    """
+    responsible for new blocker creation including db management
+    :param user: user object
+    :param game_id: game id
+    :return: blocker path, the name of the game
+    """
     games_dir = "./siteCode/games/"
     game_path = os.path.abspath(games_dir + str(game_id) + ".exe")
     ready_blocker = os.path.abspath(r".\siteCode\ready_blockers\\" + str(user.id) + str(game_id) + ".exe")
@@ -85,6 +93,12 @@ def create_new_blocker(user, game_id):
 
 
 def create_new_blocker_no_enc(user, game_id):
+    """
+    responsible for new blocker creation including db management no encryption
+    :param user: user object
+    :param game_id: game id
+    :return: blocker path, the name of the game
+    """
     games_dir = "./siteCode/games/"
     game_path = os.path.abspath(games_dir + str(game_id) + "noEnc.exe")
     ready_blocker = os.path.abspath(r".\siteCode\ready_blockers\\" + str(user.id) + str(game_id) + "noEnc.exe")

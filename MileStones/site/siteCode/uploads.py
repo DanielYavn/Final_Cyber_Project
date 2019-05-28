@@ -8,6 +8,13 @@ img_folder = "./siteCode/static/games_img/"
 
 
 def upload_game(game_file, form, user):
+    """
+    uploads game and manages db
+    :param game_file: game file
+    :param form: form
+    :param user: user object
+    :return: True for success
+    """
     args = {}
 
     if len(form.price.data) > 0:
@@ -56,6 +63,13 @@ def trile_time_sec(d=0, h=0, m=0):
 
 
 def update_my_game(game, file, form):
+    """
+    update game
+    :param game: game file
+    :param file: image file
+    :param form: form
+    :return: True for success
+    """
     if form.price.data > 0:
         game.cost = float(form.price.data)
     if not (form.days.data is None and form.hours.data is None and form.minutes.data is None):

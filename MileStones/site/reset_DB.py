@@ -28,6 +28,5 @@ for img_path in os.listdir("."):
     if os.path.basename(img_path) not in keep_files:
         os.remove(img_path)
         print img_path
-# os.remove()
 
 db.session.commit()

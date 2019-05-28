@@ -1,10 +1,8 @@
-Folder PATH listing for volume DANIEL YAV
-Volume serial number is CEB0-4726
-E:.
+
 |   tree.txt
-|   reset_DB.py
-|   ReadMe.txt
+|   requirements
 |   run.py
+|   reset_DB.py
 |   
 \---siteCode
     |   forms.py
@@ -14,24 +12,31 @@ E:.
     |   models.py
     |   crypto.py
     |   other_functions.py
-    |   blocker_prep.py
-    |   tables.py
     |   uploads.py
+    |   blocker_prep.py
     |   
     +---templates
     |       register.html
-    |       search.html
+    |       my_games.html
     |       upload.html
     |       login.html
     |       home.html
+    |       my_uploads.html
     |       game_page.html
     |       layout.html
+    |       update.html
     |       
     +---games
-    |       1.exe
+    |       
     |       
     +---egames
-    \---ready_blockers
-            decryptor_noenc.cs
-            decryptor.cs
-            
+    +---ready_blockers
+    |       decryptor.cs
+    |       decryptor_noenc.cs
+    |       
+    \---static
+        |   style.css
+        |   
+        \---games_img
+                
+                

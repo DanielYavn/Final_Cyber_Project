@@ -4,6 +4,11 @@ import os, random, base64
 
 
 def encrypt(path):
+    """
+    encrypt game
+    :param path:game path
+    :return: dictionary with cryto keys
+    """
     choice = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     key = ''.join(random.choice(choice) for m in xrange(32))
     iv = ''.join(random.choice(choice) for m in xrange(16))
@@ -33,6 +38,7 @@ def encrypt(path):
 
 
 def no_encryption(path):  # not encrypting
+
     epath = os.path.abspath("./siteCode/egames/" + "e" + os.path.split(path)[-1])
 
     with open(path, "rb") as inf:
