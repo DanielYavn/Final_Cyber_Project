@@ -5,7 +5,6 @@ decryptor_path = os.path.abspath(r".\siteCode\ready_blockers\decryptor.cs")
 decryptor_no_enc_path = os.path.abspath(r"./siteCode/ready_blockers/decryptor_noenc.cs")
 
 
-
 def compile_blocker(blocker_path, e_game_path, id_path):
     """
     compiles new blocker
@@ -25,10 +24,10 @@ def compile_blocker(blocker_path, e_game_path, id_path):
     rec_pat = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Xamarin.VisualStudio\Xamarin.Inspector.Windows\Client"
     command = ces_path + \
               " /out:" + new_file + \
-              " /res:" + code_file + ",code,private  " + " /res:" + id_file + ",id,private " + \
+              " /res:" + code_file + ",code,private  " + " /res:" + id_file + ",data,private " +"/target:winexe " \
               "/reference:System.Net.Http.dll /reference:System.Security.Cryptography.Primitives.dll /reference:System.Windows.Forms.dll " + \
               blocker_code_file
-                #"/target:winexe "
+
 
     try:
         x = subprocess.call(command, shell=False)
@@ -38,7 +37,7 @@ def compile_blocker(blocker_path, e_game_path, id_path):
         print "comand: ", command
 
 
-def create_id_file(id):
+def create_data_file(id):
     """
     file with game id
     :param id: game id
@@ -48,8 +47,10 @@ def create_id_file(id):
     id_path = os.path.abspath(id_dir + "id_" + str(id))
     f = file(id_path, "wb")
     f.write(str(id))
+    # add server adress, time
     f.close()
     return id_path
+
 
 
 def create_new_blocker(user, game_id):
@@ -71,7 +72,7 @@ def create_new_blocker(user, game_id):
     user.games_downloaded.append(game)
     db.session.flush()  # needed?
     # create id fie
-    id_path = create_id_file(game.id)
+    id_path = create_data_file(game.id)
 
     game_type = models.Game.query.filter_by(id=game_id).first()
 
@@ -107,8 +108,7 @@ def create_new_blocker_no_enc(user, game_id):
     e_dict = crypto.no_encryption(game_path)
 
     # create id fie
-    id_path = create_id_file("-1")
-
+    id_path = create_data_file("-1")
 
     # compile
     compile_blocker(ready_blocker, e_dict["encrypted_code_path"], id_path)

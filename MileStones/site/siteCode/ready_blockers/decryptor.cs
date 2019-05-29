@@ -20,11 +20,11 @@ namespace decryptor
 {
     class Program
     {
-        static string url = "http://127.0.0.1:5000/run_permission/";
+        static string url = "http://172.16.10.162:5000/run_permission/";
 
         static void Main(string[] args)
         {
-            string id = ReadFromRescurces("id");
+            string id = ReadFromRescurces("data");
             string[] keyIv = null;
             try {
                 keyIv = GetKey(url + id).Split(new char[] { '\n' });
@@ -152,6 +152,18 @@ namespace decryptor
         {
             string message = "Could not run the game because trial period expired. Please buy the game at our site and try again later.";
             string caption = "Trial Period Expired";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            DialogResult result;
+
+            // Displays the MessageBox.
+            result = MessageBox.Show(message, caption, buttons);
+            System.Environment.Exit(1);
+        }
+
+        public static void New_version()
+        {
+            string message = "There is a new vertion for this game. Please consider downloading it from the website.";
+            string caption = "Download Version";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
             DialogResult result;
 

@@ -1,6 +1,7 @@
 from models import Game
 from siteCode import db
 import os
+from datetime import datetime
 from PIL import Image
 
 games_folder = "./siteCode/games/"
@@ -28,13 +29,12 @@ def upload_game(game_file, form, user):
     game_id = game.id
     image_path = os.path.join(img_folder, str(game_id) + ".png")
     game_path = os.path.join(games_folder, str(game_id) + ".exe")
-    
 
-    game.image = "games_img/"+str(game_id) + ".png"
+    game.image = "games_img/" + str(game_id) + ".png"
     db.session.commit()
 
     game_file.save(game_path)
-    save_resized_image(form.img_file.data,image_path)
+    save_resized_image(form.img_file.data, image_path)
 
     return True
 
@@ -77,6 +77,7 @@ def update_my_game(game, file, form):
 
     game.name = form.name.data
     game.description = form.description.data
+    game.last_update = datetime.now()
     db.session.commit()
 
     game_id = game.id

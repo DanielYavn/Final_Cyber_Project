@@ -43,8 +43,6 @@ class Game(db.Model):
 
     trile_time = db.Column(db.Integer, default=free_secounds)  # in secounds
 
-    rating = db.Column(db.Integer, default=None)
-
     uploader = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     games_downloaded = db.relationship('GameDownload', backref="game")  # lazy=True
 
@@ -53,6 +51,9 @@ class Game(db.Model):
     downloads = db.Column(db.Integer, default=0)
 
     image = db.Column(db.String(50),nullable=False)
+
+    last_update = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    
 
     def __repr__(self):
         return "Game(id:{0}, name4:{1}, cost:{2}, removed:{3})".format(self.id, self.name, self.cost, self.removed)

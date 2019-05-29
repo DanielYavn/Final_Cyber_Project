@@ -26,8 +26,12 @@ html {
 img.rounded{
 border-radius: 5px;
 }
+
 div,article{
 position:relative;
+}
+div.full-height{
+height:100%;
 }
 
 a.button{
@@ -36,5 +40,11 @@ margin-left: 0.1rem;
 right:    1rem;
 bottom:   1rem;
 display: inline-block;
+position: static;
 }
 
+p{
+word-wrap: break-word;
+overflow: hidden;
+white-space: pre-line;
+}

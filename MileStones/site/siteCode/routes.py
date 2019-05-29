@@ -8,7 +8,6 @@ from datetime import datetime
 from other_functions import download_and_remove
 
 
-
 @app.route("/", methods=["GET", "POST"])
 def home():
     """

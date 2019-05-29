@@ -1,5 +1,33 @@
 {%extends "layout.html"%}
 {%block content%}
+
+<script type="text/javascript">
+window.onload = function(){
+function showFileName( event, label ) {
+  // the change event gives us the input it occurred in
+  var input = event.srcElement;
+   console.log(input)
+   console.log(label)
+
+  // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+  var fileName = input.files[0].name;
+
+  // use fileName however fits your app best, i.e. add it into a div
+  label.textContent = fileName;
+  }
+var input = document.getElementById('game_file_input');
+var infoArea = document.getElementById( 'game_file_filename' );
+input.addEventListener( 'change', function(){showFileName(event,infoArea)} );
+console.log(input)
+
+var img_input = document.getElementById('img_file_input');
+var img_infoArea = document.getElementById( 'img_file_filename' );
+img_input.addEventListener( 'change', function(){showFileName(event,img_infoArea)} );
+console.log(img_input)
+
+}
+
+</script>
 <div class="box">
     <h1 class="title h-1"> Upload</h1>
 
@@ -24,26 +52,18 @@
             <br>
                <div class="file has-name">
                     <label class="file-label">
-                         {{form.game_file(class="file-input")}}
+                         {{form.game_file(id="game_file_input",class="file-input")}}
                             <span class="file-cta">
                                 <span class="file-label">
                                     Choose your game
                                 </span>
                             </span>
+                        <div id="game_file_filename" class="file-name">
+                            No File Selected
+                        </div>
+
                     </label>
                </div>
-               <br>
-               <div class="file has-name">
-                   <label class="file-label">
-                       {{form.img_file(class="file-input")}}
-                       <span class="file-cta">
-                           <span class="file-label">
-                               Choose game image
-                           </span>
-                       </span>
-                   </label>
-               </div>
-            </div>
             <div>
                 {%if form.game_file.errors %}
                     {% for error in form.game_file.errors %}
@@ -51,6 +71,25 @@
                     {% endfor %}
                 {% endif %}
             </div>
+
+
+
+               <br>
+               <div class="file has-name">
+                   <label class="file-label">
+                       {{form.img_file(id="img_file_input",class="file-input")}}
+                       <span class="file-cta">
+                           <span class="file-label">
+                               Choose game image
+                           </span>
+                       </span>
+                       <div id="img_file_filename" class="file-name">
+                            No File Selected
+                        </div>
+                   </label>
+               </div>
+            </div>
+
 
             <br>
             <div>

@@ -1,5 +1,21 @@
 {%extends "layout.html" %}
 {%block content%}
+        <script>
+
+             var time = new Date().getTime();
+             $(document.body).bind("mousemove keypress", function(e) {
+                 time = new Date().getTime();
+             });
+
+             function refresh() {
+                 if(new Date().getTime() - time >= 1000)
+                     window.location.reload(true);
+                 else
+                     setTimeout(refresh, 1000);
+             }
+
+             setTimeout(refresh, 1000);
+        </script>
 <br>
 <div>
     <form method="POST" action="">
@@ -18,21 +34,25 @@
     </form>
     <section class="">
         {% for game in games.items %}
-            <article class="box parent grid-parent">
+            <article class="box parent grid-parent" >
                 <div class="child">
-                    <div class="has-text-centered" style="position: relative;">
-                        <span class="title is-3 ">{{game.name}}</span>&nbsp;
-                         <strong class="title is-5">{{game.user.username}}</strong>
+                    <div class="">
+                        <div class="has-text-centered" style="position: relative;">
+                            <span class="title is-3 ">{{game.name}}</span>&nbsp;
+                             <strong class="title is-5">{{game.user.username}}</strong>
+                        </div>
+
+                        <span>{{game.upload_date.strftime("%d-%m-%Y")}}</span>
+
+                        <p>{{game.description}}</p>
                     </div>
+                    <a href="{{url_for('game_page',gameId=game.id)}}" class="button is-link right-aligned" >read more</a>
 
-                    <span>{{game.upload_date.strftime("%d-%m-%Y")}}</span>
-
-                    <p style="white-space: pre">{{game.description}}</p>
-                    <a href="{{url_for('game_page',gameId=game.id)}}" class="button is-link right-aligned" style="position: absolute;">read more</a>
                 </div>
                 <div class="child image is-3by2">
                     <img class="rounded" src="{{url_for('static',filename=game.image)}}">
                 </div>
+
             </article>
         {%else%}
         <div>
