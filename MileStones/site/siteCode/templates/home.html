@@ -1,5 +1,6 @@
 {%extends "layout.html" %}
 {%block content%}
+<!--
         <script>
 
              var time = new Date().getTime();
@@ -16,12 +17,13 @@
 
              setTimeout(refresh, 1000);
         </script>
+-->
 <br>
 <div>
     <form method="POST" action="">
         {{form.hidden_tag()}}
 
-        <div class="">
+        <div>
             <div class="field has-addons">
                 <div class="control is-expanded">
                     {{form.search_bar(class="input is-info is-medium")}}
@@ -36,7 +38,7 @@
         {% for game in games.items %}
             <article class="box parent grid-parent" >
                 <div class="child">
-                    <div class="">
+                    <div style="height: 90%;">
                         <div class="has-text-centered" style="position: relative;">
                             <span class="title is-3 ">{{game.name}}</span>&nbsp;
                              <strong class="title is-5">{{game.user.username}}</strong>

@@ -1,0 +1,129 @@
+{%extends "layout.html"%}
+{%block content%}
+
+<script type="text/javascript">
+window.onload = function(){
+function showFileName( event, label ) {
+  // the change event gives us the input it occurred in
+  var input = event.srcElement;
+   console.log(input)
+   console.log(label)
+
+  // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+  var fileName = input.files[0].name;
+
+  // use fileName however fits your app best, i.e. add it into a div
+  label.textContent = fileName;
+  }
+var input = document.getElementById('game_file_input');
+var infoArea = document.getElementById( 'game_file_filename' );
+input.addEventListener( 'change', function(){showFileName(event,infoArea)} );
+console.log(input)
+
+var img_input = document.getElementById('img_file_input');
+var img_infoArea = document.getElementById( 'img_file_filename' );
+img_input.addEventListener( 'change', function(){showFileName(event,img_infoArea)} );
+console.log(img_input)
+
+}
+
+</script>
+<div class="box">
+    <h1 class="title h-1"> Upload</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {{form.hidden_tag()}}
+        <fieldset >
+            <div>
+                {%if form.name.errors %}
+                    {{form.name(class="input is-info")}}
+                    <div>
+                        {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                {%else%}
+                    {{form.name(class="input is-info")}}
+                {% endif %}
+            </div>
+            <div>
+            <br>
+               <div class="file has-name">
+                    <label class="file-label">
+                         {{form.game_file(id="game_file_input",class="file-input")}}
+                            <span class="file-cta">
+                                <span class="file-label">
+                                    Choose your game
+                                </span>
+                            </span>
+                        <div id="game_file_filename" class="file-name">
+                            No File Selected
+                        </div>
+
+                    </label>
+               </div>
+            <div>
+                {%if form.game_file.errors %}
+                    {% for error in form.game_file.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+
+               <br>
+               <div class="file has-name">
+                   <label class="file-label">
+                       {{form.img_file(id="img_file_input",class="file-input")}}
+                       <span class="file-cta">
+                           <span class="file-label">
+                               Choose game image
+                           </span>
+                       </span>
+                       <div id="img_file_filename" class="file-name">
+                            No File Selected
+                        </div>
+                   </label>
+               </div>
+            </div>
+
+
+            <br>
+            <div>
+                {{form.description(class="textarea")}}
+                {%if form.description.errors %}
+                    <div>
+                        {% for error in form.description.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>
+            <br>
+            <span>Choose the length of the trial period</span>
+            <div class="field is-grouped is-grouped-left">
+
+                 {{form.days(class="input")}}   {{form.hours(class="input")}}  {{form.minutes(class="input")}}
+            </div>
+            <div>
+                {{form.price(class="input ")}}
+                {%if form.price.errors %}
+                    <div>
+                        {% for error in form.price.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>
+            <div style="">
+                {{form.upload(class="button is-info submit")}}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{%endblock content%}

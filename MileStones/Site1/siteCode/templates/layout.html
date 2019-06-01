@@ -1,0 +1,74 @@
+<!DOCTYPE html >
+<html lang="en">
+    <head>
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+        <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+
+        <meta charset="UTF-8"  content="width=device-width, initial-scale=1">
+        <title>Game Blocker</title>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript">
+            setTimeout(remove_flash, 5000);
+            function  remove_flash(){
+                var fadeTarget = document.getElementById("flashes");
+                var fadeEffect = setInterval(function () {
+                if (!fadeTarget.style.opacity) {
+                    fadeTarget.style.opacity = 1;
+                }
+                if (fadeTarget.style.opacity > 0) {
+                    fadeTarget.style.opacity -= 0.1;
+                } else {
+                    clearInterval(fadeEffect);
+                }
+                }, 50);
+                }
+        </script>
+
+    </head>
+
+    <body class="has-navbar-fixed-top">
+            <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
+                {% if current_user.is_authenticated %}
+                    <div class="navbar-start">
+                        <h2 class="navbar-item nevbar-brand" >Hello {{current_user.username}}</h2>
+                    </div>
+
+                    <div class="navbar-end">
+                        <a href="{{url_for('home')}}" class="navbar-item">Home</a>
+                        <a href="{{url_for('my_games')}}" class="navbar-item">My Games</a>
+                        <a href="{{url_for('my_uploads')}}" class="navbar-item">My Uploads</a>
+                        <a href="{{url_for('upload')}}" class="navbar-item">Upload</a>
+                        <a href="{{url_for('logout')}}" class="navbar-item">Logout</a>
+                    </div>
+                {%else%}
+                    <div class="navbar-start">
+                        <h2 class="navbar-item nevbar-brand">Hello Guest</h2>
+                    </div>
+                    <div class="navbar-end">
+                        <a href="{{url_for('home')}}" class="navbar-item">Home</a>
+                        <a href="{{url_for('login')}}" class="navbar-item">Login</a>
+                        <a href="{{url_for('register')}}" class="navbar-item">Register</a>
+                    </div>
+                {% endif %}
+
+            </nav>
+            <div id="flashes">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <ul>
+                            {% for category, message in messages %}
+                                    <p class="notification {{category}}">
+                                        {{ message }}
+                                    </p>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+        <main>{% block content %}{% endblock %}</main>
+
+    </body>
+</html>

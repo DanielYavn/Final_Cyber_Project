@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, send_file
+from flask import render_template, url_for, flash, redirect, request, send_file, abort
 import forms
 from uploads import upload_game, update_my_game
 from models import Game, User, GameDownload, search_games_downloaded, search_games, search_uploaded_games
@@ -87,9 +87,12 @@ def download_game(gameId):
     :return: redirect to home page.
     """
     if current_user.is_authenticated:
-        ready_blocker, gamename = blocker_prep.create_new_blocker(current_user, gameId)
-        # ready_blocker=blocker_prep.create_new_blocker_no_enc(current_user,game_id)
-
+        try:
+            ready_blocker, gamename = blocker_prep.create_new_blocker(current_user, gameId)
+            # ready_blocker=blocker_prep.create_new_blocker_no_enc(current_user,game_id)
+        except blocker_prep.CompilationFailedException:
+            flash("A fatal error has occurred. Please try again later.", "is-danger")
+            return redirect(url_for("home"))
         return download_and_remove(ready_blocker, gamename + ".exe")
         # return send_from_directory(directory=path_to_dir, filename=filename, as_attachment=True)
 
@@ -107,13 +110,14 @@ def run_permission(gameId):
     """
     try:
         game = GameDownload.query.filter_by(id=gameId).first()
+        print GameDownload.query.filter_by(id=gameId).all()
     except AttributeError:
-        return ""
+        abort(500)
 
     if game.date is not None:  # game is not bought
         if datetime.utcnow() > game.date:
-            return ""
-    return game.Crypto_key + "\n" + game.Crypto_iv
+            abort(401)
+    return game.Crypto_key + "\n" + game.Crypto_iv + "\n" + str(game.game.last_update)
 
 
 @app.route("/buy_game/<int:gameId>")

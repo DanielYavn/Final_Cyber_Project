@@ -77,11 +77,12 @@ def update_my_game(game, file, form):
 
     game.name = form.name.data
     game.description = form.description.data
-    game.last_update = datetime.now()
-    db.session.commit()
+
 
     game_id = game.id
 
-    if not file is None:
+    if file is not None:
         file.save(os.path.join(games_folder, str(game_id) + ".exe"))
+        game.last_update = datetime.now()
+    db.session.commit()
     return True

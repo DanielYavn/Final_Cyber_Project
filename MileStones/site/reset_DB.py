@@ -2,7 +2,7 @@ from siteCode import db, bcrypt
 from siteCode.models import User, Game
 import os
 
-keep_files = ["1.exe", "1.png"]
+keep_files = [] #["1.exe", "1.png"]
 
 db.drop_all()
 db.create_all()

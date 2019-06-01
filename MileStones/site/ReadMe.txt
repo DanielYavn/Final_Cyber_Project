@@ -1,19 +1,6 @@
-https://bulmatemplates.github.io/bulma-templates/
-to do:
+programmer: daniel Yavnilovich
 
-add:
--rating
--full upload
--page per game
--reset passqword
--change details
--fix blocker console game, forms
--stealing demonstration
--get statistics
--remove tables
-
-err mng:
--login logout
+for more details please see project book
 
 
-decorate:
+first time use run reset_DB.py for DB creation

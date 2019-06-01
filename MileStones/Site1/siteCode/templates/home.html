@@ -1,0 +1,82 @@
+{%extends "layout.html" %}
+{%block content%}
+        <script>
+
+             var time = new Date().getTime();
+             $(document.body).bind("mousemove keypress", function(e) {
+                 time = new Date().getTime();
+             });
+
+             function refresh() {
+                 if(new Date().getTime() - time >= 1000)
+                     window.location.reload(true);
+                 else
+                     setTimeout(refresh, 1000);
+             }
+
+             setTimeout(refresh, 1000);
+        </script>
+<br>
+<div>
+    <form method="POST" action="">
+        {{form.hidden_tag()}}
+
+        <div class="">
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    {{form.search_bar(class="input is-info is-medium")}}
+                </div>
+                <div class="control">
+                    {{form.submit(class="button is-info is-medium")}}
+                </div>
+            </div>
+        </div>
+    </form>
+    <section class="">
+        {% for game in games.items %}
+            <article class="box parent grid-parent" >
+                <div class="child">
+                    <div class="">
+                        <div class="has-text-centered" style="position: relative;">
+                            <span class="title is-3 ">{{game.name}}</span>&nbsp;
+                             <strong class="title is-5">{{game.user.username}}</strong>
+                        </div>
+
+                        <span>{{game.upload_date.strftime("%d-%m-%Y")}}</span>
+
+                        <p>{{game.description}}</p>
+                    </div>
+                    <a href="{{url_for('game_page',gameId=game.id)}}" class="button is-link right-aligned" >read more</a>
+
+                </div>
+                <div class="child image is-3by2">
+                    <img class="rounded" src="{{url_for('static',filename=game.image)}}">
+                </div>
+
+            </article>
+        {%else%}
+        <div>
+            <p class="field has-addons">no items found</p>
+        </div>
+
+        {% endfor %}
+    </section>
+    <section class="field has-text-centered">
+
+        {% for page_num in games.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if games.page == page_num %}
+                    <a href="{{ url_for('home', page=page_num, prev_search=form.search_bar.data) }}" class="button">{{ page_num }}</a>
+                {% else %}
+                    <!-- different style-->
+                    <a href="{{ url_for('home', page=page_num,prev_search=form.search_bar.data) }}" class="button">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+    </section>
+
+</div>
+
+{%endblock content%}

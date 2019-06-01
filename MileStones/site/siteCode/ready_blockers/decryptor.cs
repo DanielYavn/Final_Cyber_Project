@@ -20,36 +20,42 @@ namespace decryptor
 {
     class Program
     {
-        static string url = "http://172.16.10.162:5000/run_permission/";
+        static string url = "http://172.18.180.241:5000/run_permission/";
 
         static void Main(string[] args)
         {
-            string id = ReadFromRescurces("data");
-            string[] keyIv = null;
-            try {
-                keyIv = GetKey(url + id).Split(new char[] { '\n' });
+
+            string[] data = ReadFromRescurces("data").Split('\n');
+            string id = data[0];
+            DateTime downloadTime = DateTime.Parse(data[1]); // download time
+            string[] keyIvDate = null;
+            try
+            {
+                keyIvDate = GetKey(url + id).Split(new char[] { '\n' });
             }
             catch (AggregateException)
             {
                 Server_down_MB();
             }
-            if (keyIv[0] == "")
+            catch (HttpRequestException)
             {
                 Buy_game_MB();
             }
-            else
-            {
-                byte[] code = GetGame(keyIv[0], keyIv[1]);
-                RunCSExe(code);
-            }
-            }
+            DateTime updateTime = DateTime.Parse(keyIvDate[2]); // download time
+            Console.WriteLine(1);
+            if (DateTime.Compare(downloadTime, updateTime) < 0) //if there was update after download
+                New_version();
+
+            byte[] code = GetGame(keyIvDate[0], keyIvDate[1]);
+            RunCSExe(code);
+
+        }
 
         public static string GetKey(string url)
         {
             string key = "";
             HttpClient client = new HttpClient();
             HttpResponseMessage response;
-
 
             response = client.GetAsync(url).Result;
             response.EnsureSuccessStatusCode();
@@ -75,7 +81,7 @@ namespace decryptor
                 {
                     method.Invoke(o, new object[] { new string[0] });
                 }
-                
+
             }
         }
         static string ReadFromRescurces(string resName)
@@ -103,8 +109,8 @@ namespace decryptor
             var aes = new AesManaged();
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
-            aes.Key = textEncoder.GetBytes(key); 
-            aes.IV = textEncoder.GetBytes(iv); 
+            aes.Key = textEncoder.GetBytes(key);
+            aes.IV = textEncoder.GetBytes(iv);
 
             var decryptor = aes.CreateDecryptor();
             byte[] encBytes = Convert.FromBase64String(enc_cipher);
@@ -142,10 +148,9 @@ namespace decryptor
             string message = "Could not run the game due to network error. Please check your internet connection and try again later.";
             string caption = "Connection Error";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
-            DialogResult result;
 
             // Displays the MessageBox.
-            result = MessageBox.Show(message, caption, buttons);
+            MessageBox.Show(message, caption, buttons, MessageBoxIcon.Error);
             System.Environment.Exit(1);
         }
         public static void Buy_game_MB()
@@ -153,10 +158,9 @@ namespace decryptor
             string message = "Could not run the game because trial period expired. Please buy the game at our site and try again later.";
             string caption = "Trial Period Expired";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
-            DialogResult result;
 
             // Displays the MessageBox.
-            result = MessageBox.Show(message, caption, buttons);
+            MessageBox.Show(message, caption, buttons, MessageBoxIcon.Warning);
             System.Environment.Exit(1);
         }
 
@@ -165,11 +169,9 @@ namespace decryptor
             string message = "There is a new vertion for this game. Please consider downloading it from the website.";
             string caption = "Download Version";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
-            DialogResult result;
 
             // Displays the MessageBox.
-            result = MessageBox.Show(message, caption, buttons);
-            System.Environment.Exit(1);
+            MessageBox.Show(message, caption, buttons, MessageBoxIcon.Information);
         }
     }
 }

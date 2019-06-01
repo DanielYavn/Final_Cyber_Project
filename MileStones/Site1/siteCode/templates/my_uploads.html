@@ -1,0 +1,65 @@
+{%extends "layout.html" %}
+{%block content%}
+
+
+<div>
+    <h2 class="title h-1" align="center">Games You Uploaded</h2>
+    <form method="POST" action="">
+        {{form.hidden_tag()}}
+
+        <div class="">
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    {{form.search_bar(class="input is-info is-medium")}}
+                </div>
+                <div class="control">
+                    {{form.submit(class="button is-info is-medium")}}
+                </div>
+            </div>
+        </div>
+    </form>
+    <section>
+        {% for game in games.items %}
+
+            <article class="box">
+                <span class="title is-3"> {{game.name}}</span>&nbsp;
+                <strong class="title is-5"> {{game.user.username}}</strong></br>
+                <span>{{game.upload_date.strftime("%d-%m-%Y")}}</span>
+                <span><p>game was downloaded {{game.downloads}} times</p></span>
+                <p style="white-space: pre">{{game.description}}</p>
+                {%if game.removed%}
+                    <strong>you removed this game</strong><br>
+                {%endif%}
+                 <div class="buttons has-addons is-right">
+                {%if game.removed%}
+                    <a href="{{url_for('unremove_game',gameId=game.id)}}" class="button is-link">undo removal</a>
+                {%else%}
+                    <a href="{{url_for('remove_game',gameId=game.id)}}" class="button is-link">remove</a>
+                {%endif%}
+
+                <a href="{{url_for('update_game',gameId=game.id)}}" class="button is-link">Update game details</a>
+                </div>
+            </article>
+        {%else%}
+            <div>
+                <p class="field has-addons">no items found</p>
+            </div>
+        {% endfor %}
+    </section>
+</div>
+<section class="field has-text-centered">
+
+        {% for page_num in games.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if games.page == page_num %}
+                    <a href="{{ url_for('home', page=page_num, prev_search=form.search_bar.data) }}" class="button">{{ page_num }}</a>
+                {% else %}
+                    <!-- different style-->
+                    <a href="{{ url_for('home', page=page_num,prev_search=form.search_bar.data) }}" class="button">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+    </section>
+{%endblock content%}

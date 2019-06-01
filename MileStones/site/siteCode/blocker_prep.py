@@ -1,8 +1,13 @@
-import subprocess, os, time
+import subprocess, os
 from siteCode import crypto, models, db
+from datetime import datetime
 
 decryptor_path = os.path.abspath(r".\siteCode\ready_blockers\decryptor.cs")
 decryptor_no_enc_path = os.path.abspath(r"./siteCode/ready_blockers/decryptor_noenc.cs")
+
+
+class CompilationFailedException(Exception):
+    pass
 
 
 def compile_blocker(blocker_path, e_game_path, id_path):
@@ -24,17 +29,15 @@ def compile_blocker(blocker_path, e_game_path, id_path):
     rec_pat = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Xamarin.VisualStudio\Xamarin.Inspector.Windows\Client"
     command = ces_path + \
               " /out:" + new_file + \
-              " /res:" + code_file + ",code,private  " + " /res:" + id_file + ",data,private " +"/target:winexe " \
+              " /res:" + code_file + ",code,private  " + " /res:" + id_file + ",data,private " + \
               "/reference:System.Net.Http.dll /reference:System.Security.Cryptography.Primitives.dll /reference:System.Windows.Forms.dll " + \
               blocker_code_file
+    # + "/target:winexe "
 
-
-    try:
-        x = subprocess.call(command, shell=False)
-    except Exception as e:
+    x = subprocess.call(command, shell=False)
+    if x is not 0:
         print "there was a compilation error"
-        print "massage: ", e.message
-        print "comand: ", command
+        raise CompilationFailedException
 
 
 def create_data_file(id):
@@ -45,12 +48,14 @@ def create_data_file(id):
     """
     id_dir = "./siteCode/egames/"
     id_path = os.path.abspath(id_dir + "id_" + str(id))
-    f = file(id_path, "wb")
-    f.write(str(id))
-    # add server adress, time
-    f.close()
-    return id_path
+    data = str(id) + "\n" + str(datetime.now())
+    print data
+    with file(id_path, "wb") as f:
+        f.write(data)
 
+    # add server adress, time
+
+    return id_path
 
 
 def create_new_blocker(user, game_id):

@@ -12,8 +12,9 @@ def download_and_remove(path, user_filename):
 
         os.remove(path)
 
-    r = app.response_class(generate(), mimetype='text/csv')
-    r.headers.set('Content-Disposition', 'attachment', filename=user_filename)
-    return r
-
-
+    try:
+        r = app.response_class(generate(), mimetype='text/csv')
+        r.headers.set('Content-Disposition', 'attachment', filename=user_filename)
+        return r
+    except:
+        print "file download faild"
