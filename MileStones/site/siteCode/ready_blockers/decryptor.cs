@@ -20,7 +20,7 @@ namespace decryptor
 {
     class Program
     {
-        static string url = "http://172.18.180.241:5000/run_permission/";
+        static string url = "http://172.16.10.189:5000/run_permission/";
 
         static void Main(string[] args)
         {
@@ -42,7 +42,6 @@ namespace decryptor
                 Buy_game_MB();
             }
             DateTime updateTime = DateTime.Parse(keyIvDate[2]); // download time
-            Console.WriteLine(1);
             if (DateTime.Compare(downloadTime, updateTime) < 0) //if there was update after download
                 New_version();
 

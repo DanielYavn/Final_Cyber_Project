@@ -32,7 +32,7 @@ def upload_game(game_file, form, user):
 
     game.image = "games_img/" + str(game_id) + ".png"
     db.session.commit()
-
+    print game_file
     game_file.save(game_path)
     save_resized_image(form.img_file.data, image_path)
 
